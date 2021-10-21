@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Kömək";
+}
+
+@model FaqVm
+<!-- Start Single-Contact -->
+<section style="background-image:url(@Model.BackImageAbout.PhotoUrl);" id="single-list">
+    <div class="container">
+        <h1 style="color:@Model.BackImageAbout.Color">Kömək</h1>
+        <ol class="breadcrumb">
+            <li><a style="color:@Model.BackImageAbout.Color" href="/">Ana səhifə</a></li>
+            <li><span style="color:@Model.BackImageAbout.Color">Tez-tez verilən suallar</span></li>
+        </ol>
+    </div>
+</section>
+<!----------------------------------->
+
+<section class="inner-section faq-part m-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="faq-parent">
+                    @foreach (var faq in Model.FaqPages)
+                    {
+                        <div class="faq-child">
+                            <div class="faq-que"><button>@faq.Header</button></div>
+                            <div class="faq-ans" style="display: block;">
+                                <p>@faq.Title</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

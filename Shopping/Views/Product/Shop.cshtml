@@ -1,0 +1,221 @@
+﻿@{
+    ViewData["Title"] = "Satış";
+}
+@model ShopVm
+<style>
+    .disabled {
+        pointer-events: none;
+    }
+</style>
+<input type="hidden" id="SortBy" value="@Model.SortBy" />
+<input type="hidden" id="CategoryID" value="@Model.CategoryID" />
+<!-- Start Single-About-Shop -->
+<section style="background-image:url(@Model.BackImageProduct.PhotoUrl);" id="single-list">
+    <div class="container">
+        <h1 style="color:@Model.BackImageProduct.Color">Satış</h1>
+        <ol class="breadcrumb">
+            <li><a style="color:@Model.BackImageProduct.Color" href="/">Ana səhifə</a></li>
+            <li><span style="color:@Model.BackImageProduct.Color">Satış</span></li>
+        </ol>
+    </div>
+</section>
+<!-- End Single-About-Shop -->
+<!----------------------------------->
+<!-- Start Single-Shop-Category-Area -->
+<div class="shop-category-area pb-100px pt-70px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9  col-md-12 ">
+                <!-- Shop Top Area Start -->
+                <div class="shop-top-bar d-flex">
+                    <!-- Left Side start -->
+                    <p>@Model.SearchProduct.Count() Məhsul tapıldı.</p>
+                    <!-- Left Side End -->
+                    <!-- Right Side Start -->
+
+                    <div class="shop-select">
+                        <select class="form-select " aria-label="Default select example">
+                            <option selected>Filterləmə</option>
+                            <option value="@Url.Action("Shop","Product",new { sortBy=0 })"> A-dan Z-yə </option>
+                            <option value="@Url.Action("Shop","Product",new { sortBy=Convert.ToInt32(SortByEnum.OrderHigh),pageNo=Model.PageNo,id=Model.CategoryID,tagId=Model.TagId})">Z-dən A-ya</option>
+                            <option value="@Url.Action("Shop","Product",new { sortBy=Convert.ToInt32(SortByEnum.PriceLowToHigh),pageNo=Model.PageNo,id=Model.CategoryID,tagId=Model.TagId})"> Qiymət azdan çoxa</option>
+                            <option value="@Url.Action("Shop","Product",new { sortBy=Convert.ToInt32(SortByEnum.PriceHighToLow),pageNo=Model.PageNo,id=Model.CategoryID,tagId=Model.TagId})">Qiymət çoxdan aza</option>
+                        </select>
+
+                    </div>
+                    <!-- Right Side End -->
+                </div>
+                <!-- Shop Top Area End -->
+                <!-- Shop Bottom Area Start -->
+                <div class="shop-bottom-area ">
+                    @if (Model.SearchProduct.Count > 0 && Model.maxProductPrice > 0)
+                    {
+                        <div class="row">
+                            @foreach (var shop in Model.SearchProduct)
+                            {
+                                <div class="col-lg-4  col-md-6 col-sm-6 col-6 pb-3">
+                                    <!-- Single Prodect -->
+                                    <div class="product">
+                                        <div class="thumb">
+                                            <a href="@Url.Action("SingleProduct","Product",new { id=shop.ID})" class="image">
+                                                @if (shop.ProductPictures.Count > 1)
+                                                {
+                                                    <img class="product__image" src="@shop.ProductPictures[0].Picture.PictureUrl" alt="Product" />
+                                                    <img class="hover-image" src="@shop.ProductPictures[1].Picture.PictureUrl" alt="Product" />
+
+                                                }
+                                                else
+                                                {
+                                                    <img src="@shop.ProductPictures[0].Picture.PictureUrl" alt="Product" />
+
+                                                }
+                                            </a>
+                                            <span class="badges">
+
+                                                @if (shop.isNew)
+                                                {
+                                                    <span class="new">Yeni</span>
+                                                }
+                                                @if (shop.Discount != 0)
+                                                {
+                                                    <span class="sale">-@((int)(shop.Discount * 100 / shop.Price)) %</span>
+                                                }
+                                            </span>
+                                            <div class="actions">
+                                                <a href="#" class="wishlist" proId="@shop.ID"><i class="far fa-heart"></i></a>
+                                                <a href="#" class="view" data-id="@shop.ID" data-bs-toggle="modal"
+                                                   data-bs-target="#exampleModal"><i class="fas fa-arrows-alt"></i></a>
+                                            </div>
+                                            <button proId="@shop.ID" title="Səbətə at" class="add-to-cart" data-action="ADD_TO_CART">
+                                                Səbətə at <i class="fas fa-shopping-basket"></i>
+                                            </button>
+                                        </div>
+                                        <div class="content">
+                                            <h5 class="title">
+                                                <a class="product__name" href="@Url.Action("SingleProduct","Product",new { id=shop.ID})">@shop.Name</a>
+                                            </h5>
+                                            <span class="price">
+                                                @if (shop.Discount != 0)
+                                                {
+
+                                                    <span class="old"><del>₼ @shop.Price</del></span>
+                                                }
+                                                <span class="new ">₼<span class="product__price">@(shop.Price- shop.Discount)</span></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                    }
+                    else
+                    {
+                        <p class="alert alert-success">Məhsul tapılmadı</p>
+                    }
+                    <!--  Pagination Area Start -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="bottom-paginate">
+                                <p class="page-info">@Model.SearchProductCount məhsuldan @Model.SearchProduct.Count() məhsul göstərilir</p>
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link @(Model.Pager.CurrentPage==1? "disabled":"")" href="@Url.Action("Shop","Product",new { pageNo=Model.Pager.CurrentPage-1,sortBy=Model.SortBy,id=Model.CategoryID,tagId=Model.TagId})">
+                                            <i class="fas fa-long-arrow-alt-left"></i>
+                                        </a>
+                                    </li>
+                                    @for (int mypage = Model.Pager.StartPage; mypage < Model.Pager.EndPage + 1; mypage++)
+                                    {
+                                        var active = mypage == Model.Pager.CurrentPage ? "active" : string.Empty;
+                                        <li class="page-item"><a class="page-link @active" href="@Url.Action("Shop","Product",new { pageNo=mypage,sortBy=Model.SortBy,id=Model.CategoryID,tagId=Model.TagId})">@mypage</a></li>
+                                    }
+                                    <li class="page-item">
+                                        <a class="page-link @(Model.Pager.CurrentPage==Model.Pager.EndPage? "disabled":"")" href="@Url.Action("Shop","Product",new { pageNo=Model.Pager.CurrentPage+1,sortBy=Model.SortBy,id=Model.CategoryID,tagId=Model.TagId})">
+                                            <i class="fas fa-long-arrow-alt-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  Pagination Area End -->
+                </div>
+                <!-- Shop Bottom Area End -->
+            </div>
+            <!-- Sidebar Area Start -->
+            <div class="col-lg-3 order-lg-first col-md-12 order-md-last mb-md-60px mb-lm-60px">
+                <div class="shop-sidebar-wrap">
+                    <!-- Sidebar single item -->
+                    <div class="sidebar-widget">
+                        <div class="main-heading">
+                            <h3 class="sidebar-title">Kategoriyalar</h3>
+                        </div>
+                        <div class="sidebar-widget-category">
+                            <ul>
+                                <li><a href="/Product/Shop" class="@(Model.CategoryID==null?"active":"")">Bütün məhsullar <span>(@Model.SearchProductCount)</span> </a></li>
+                                @foreach (var cat in Model.Categories)
+                                {
+                                    <li><a href="@Url.Action("Shop","Product",new {id=cat.ID,sortBy=Model.SortBy,tagId=Model.TagId})" class="@(Model.CategoryID==cat.ID?"active":"")">@cat.Name<span>(@cat.Products.Count())</span> </a></li>
+
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Sidebar single item -->
+                    <div class="sidebar-widget-group">
+                        <h3 class="sidebar-title">Qiymətə Görə</h3>
+                        <fieldset class="filter-price">
+
+                            <div class="price-field">
+                                <input type="range" min="0" max="@Model.maxProductPrice" value="0" id="lower">
+                                <input type="range" min="@Model.minPrice" max="@Model.maxProductPrice" value="@Model.maxProductPrice" id="upper">
+                            </div>
+                            <div class="price-wrap">
+                                <span class="price-title">Miqdar</span>
+                                <div class="price-wrap-1">
+                                    <input id="one">
+                                    <label for="one">₼</label>
+                                </div>
+                                <div class="price-wrap_line">-</div>
+                                <div class="price-wrap-2">
+                                    <input id="two">
+                                    <label for="two">₼</label>
+                                </div>
+                            </div>
+                            <button style="background-color: #007A58 " class="btn btn-success btn-priceShop mt-3">Axtar</button>
+                        </fieldset>
+
+                    </div>
+                    <div class="sidebar-widget">
+                        <div class="main-heading">
+                            <h3 class="sidebar-title">Tags</h3>
+                        </div>
+                        <div class="sidebar-widget-category">
+                            <ul>
+
+
+                                @foreach (var item in Model.myTagList)
+                                {
+
+
+                                    <li><a href="@Url.Action("Shop","Product",new {tagId=item.ID,sortBy=Model.SortBy,id=Model.CategoryID,pageNo=Model.PageNo})" class="">@item.Name </a></li>
+
+
+
+                                }
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Single-Shop-Category-Area -->
+<!----------------------------------->
+@section Scripts
+{
+    <script src="~/assets/javascript/shop.js"></script>
+}

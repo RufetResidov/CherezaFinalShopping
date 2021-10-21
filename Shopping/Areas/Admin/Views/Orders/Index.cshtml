@@ -1,0 +1,171 @@
+﻿@model IEnumerable<Entities.Order>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<div class="animated fadeInUpShort go">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card no-b shadow">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover ">
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr class="no-b">
+                                    <td>
+                                        <h6>@item.CustomerName</h6>
+                                        <small class="text-muted">
+                                            @Html.DisplayFor(modelItem => item.CustomerEmail)
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <h6>
+                                            @Html.DisplayFor(modelItem => item.CustomerAdress)
+                                        </h6>
+                                        <small class="text-muted">
+                                            @Html.DisplayFor(modelItem => item.CustomerPhone)
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <h6>
+                                            @Html.DisplayFor(modelItem => item.PaymentMethod)
+                                        </h6>
+                                        <small class="text-muted">
+                                            @Html.DisplayFor(modelItem => item.TotalAmount)
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <h6>
+                                            @Html.DisplayFor(modelItem => item.Discount)
+                                        </h6>
+                                        <small class="text-muted">
+                                            @Html.DisplayFor(modelItem => item.Message)
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <h6>
+                                            @Html.DisplayFor(modelItem => item.OrderItems)
+
+                                           
+                                        </h6>
+                                        <small class="text-muted">
+                                            @Html.DisplayFor(modelItem => item.OrderItems)
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <a class="btn-fab btn-fab-sm btn-success shadow text-white" asp-action="Edit" asp-route-id="@item.ID"><i class="icon-pencil"></i></a> |
+                                        <a class="btn-fab btn-fab-sm btn-primary shadow text-white" asp-action="Details" asp-route-id="@item.ID"><i class="icon-edit"></i></a> |
+                                        <a class="btn-fab btn-fab-sm btn-danger shadow text-white" asp-action="Delete" asp-route-id="@item.ID"><i class="icon-delete"></i></a>
+                                    </td>
+                                </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@*<table style=" overflow-x: auto;" class="table">
+        <thead>
+            <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.CustomerName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CustomerEmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CustomerPhone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CustomerAdress)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.PaymentMethod)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Discount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeliveryChanges)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PlacedOn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TransactionID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Message)
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerPhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerAdress)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaymentMethod)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Discount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryChanges)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PlacedOn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TransactionID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Message)
+                    </td>
+
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
+

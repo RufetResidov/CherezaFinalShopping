@@ -1,0 +1,168 @@
+﻿@model Shopping.ViewModel.CartVM
+    <!-- OffCanvas Cart Start -->
+@{
+    var totalCheckPrice = @Model.Products.Sum(proId => Model.ProIDs.Where(x => x == proId.ID).Count() * (proId.Price - proId.Discount));
+    decimal totalPrice = 0;
+    int totalQuantity = 0;
+}
+
+@if (Model != null)
+{
+    @if (Model.Products.Count > 0 && Model.Products != null)
+    {
+        <ul class="cart-list">
+
+            @foreach (var pro in Model.Products)
+            {
+                int quantity = Model.ProIDs.Where(x => pro.ID == x).Count();
+
+                <li class="cart-item">
+                    <div class="cart-media">
+                        <a href="@Url.Action("SingleProduct","Product",new { id=pro.ID})"><img src="@pro.ProductPictures[0].Picture.PictureUrl" alt="product"></a>
+                        <button cart-id="@pro.ID" class="cart-delete">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                    <div class="cart-info-group">
+                        <div class="cart-info">
+                            <h6><a href="product-single.html">@pro.Name</a></h6>
+                        </div>
+                        <div class="cart-action-group">
+                            <div class="product-action">
+                                <button class="action-pop-minus" title="Quantity Minus">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <input class="action-input" data-id="@pro.ID" maxlength="3" title="Quantity Number" disabled type="text"
+                                       name="quantity" value="@(quantity*100)">
+                                <button class="action-pop-plus" title="Quantity Plus">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            @if (pro.Discount != 0)
+                            {
+                                <h6 class="shopPrice" data-price="@(pro.Price - pro.Discount)">@((decimal)(pro.Price - pro.Discount)*quantity)₼</h6>
+
+                            }
+                            else
+                            {
+                                <h6 class="shopPrice" data-price="@(pro.Price - pro.Discount)">@(pro.Price*quantity)₼</h6>
+                            }
+
+                        </div>
+                    </div>
+                </li>
+                totalPrice += quantity * (decimal)(pro.Price - pro.Discount);
+                totalQuantity += quantity;
+            }
+        </ul>
+        <div class="cart-footer">
+            <a class="cart-checkout-btn" href="/Order/Checkout">
+                <span proId="@Model.ProIDs" class="checkout-label">Təsdiq edin</span>
+                <span data-checkPrice="@totalCheckPrice" class="checkout-price">@totalCheckPrice ₼</span>
+            </a>
+        </div>
+    }
+    else
+    {
+        <p class="alert alert-success">Səbət boşdur!</p>
+    }
+}
+else
+{
+    <p class="alert alert-success">Səbət boşdur!</p>
+}
+<script src="~/assets/javascript/jquery.js"></script>
+<script>
+    $(document).ready(function () {
+        let cookieVal = getCookie("myCart");
+
+        if (typeof cookieVal !== "undefined" && cookieVal !== "" && cookieVal !== null) {
+            cookieVal = [...cookieVal.split("-")]
+            let uniqeQuantity = [...new Set(cookieVal)];
+            $(".shop-quantity").text(uniqeQuantity.length);
+            $(".cart-total-quantity").text(uniqeQuantity.length);
+        }
+        let productIds = cookieVal != "" ? cookieVal : [];
+
+        $(".action-pop-plus").on("click", function () {
+            let productId = Number($(this).closest(".product-action").children(".action-input").attr("data-id"))
+            let inputDOM = $(this).closest(".product-action").children(".action-input").get(0);
+            let inputVal = Number(inputDOM.value);
+
+            if (inputVal >= 100) {
+                debugger;
+                //inputDOM.value = currentVal * 100;
+
+                inputVal += 100
+                inputDOM.value = inputVal
+                var shopPrice = Number($(this).parents(".cart-action-group").find(".shopPrice").attr("data-price"));
+                $(this).parents(".cart-action-group").find(".shopPrice").text(shopPrice * Number(inputVal / 100) +" ₼");
+                productIds = productIds.filter(x => x != productId);
+                for (let j = 0; j < inputVal / 100; j++)
+                {
+                    productIds.push(productId);
+                }
+                setCookie('myCart', productIds.join("-"), 7);
+            }
+
+        });
+        $(".action-pop-minus").on("click", function () {
+            let productId = Number($(this).closest(".product-action").children(".action-input").attr("data-id"))
+            let inputDOM = $(this).closest(".product-action").children(".action-input").get(0);
+            let inputVal = Number(inputDOM.value);
+            if (inputVal > 100) {
+                inputVal -= 100;
+                inputDOM.value = inputVal
+                var shopPrice = Number($(this).parents(".cart-action-group").find(".shopPrice").attr("data-price"));
+                $(this).parents(".cart-action-group").find(".shopPrice").text(shopPrice * inputVal / 100 + " ₼");
+                productIds = productIds.filter(x => x != productId);
+                for (let j = 0; j < inputVal/100; j++) {
+                    productIds.push(productId);
+                }
+                setCookie('myCart', productIds.join("-"), 7);
+            }
+        })
+        $(".cart-media .cart-delete").click(function () {
+            const cartProductId = $(this).attr("cart-id")
+            productIds = productIds.filter(x => x != cartProductId)
+            setCookie('myCart', productIds.join("-"), 7);
+            $(this).parents(".cart-item").remove()
+            if (productIds.length <= 0) {
+                $(".shopping-cart .myCart").html(`<p class="alert alert-success">Məhsul əlavə et!</p>`)
+            }
+        })
+        $(".table-responsive .check-delete").click(function () {
+            const cartProductId = $(this).attr("cart-id")
+            productIds = productIds.filter(x => x != cartProductId)
+            setCookie('myCart', productIds.join("-"), 7);
+            $(this).parents("tbody tr").remove()
+            if (productIds.length <= 0) {
+                window.location.reload()
+            }
+        })
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            let name = cname + "=";
+            let ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+    })
+ 
+
+</script>
+

@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="~/admin/assets/img/basic/favicon.ico" type="image/x-icon">
+    <title>Admin</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/admin/assets/css/app.css">
+    <style>
+        .loader {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #F5F8FA;
+            z-index: 9998;
+            text-align: center;
+        }
+
+        .plane-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
+    </style>
+    <!-- Js -->
+    <!--
+    --- Head Part - Use Jquery anywhere at page.
+    --- http://writing.colin-gourlay.com/safely-using-ready-before-including-jquery/
+    -->
+    <script>(function (w, d, u) { w.readyQ = []; w.bindReadyQ = []; function p(x, y) { if (x == "ready") { w.bindReadyQ.push(y); } else { w.readyQ.push(x); } }; var a = { ready: p, bind: p }; w.$ = w.jQuery = function (f) { if (f === d || f === u) { return a } else { p(f) } } })(window, document)</script>
+</head>
+<body class="light">
+    <!-- Pre loader -->
+    <div id="loader" class="loader">
+        <div class="plane-container">
+            <div class="preloader-wrapper small active">
+                <div class="spinner-layer spinner-blue">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+
+                <div class="spinner-layer spinner-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+
+                <div class="spinner-layer spinner-yellow">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+
+                <div class="spinner-layer spinner-green">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="app">
+        <aside class=" main-sidebar fixed offcanvas shadow" data-toggle='offcanvas'>
+            <section class="sidebar">
+                <ul class="mt-3 sidebar-menu">
+                    <li class="header"><strong>Əsas Menu</strong></li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="icon icon icon-package blue-text s-18"></i>
+                            <span>Məhsul</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="/Admin/Products/Index"><i class="icon icon-circle-o"></i> Məhsullar</a>
+                            </li>
+                            <li>
+                                <a href="/Admin/BackImageProducts/Index"><i class="icon icon-circle-o"></i>BackImage</a>
+                                <a href="/Admin/Products/Create">
+                                    <i class="icon icon-add"></i>Məhsul əlavə et
+                                </a>
+                                <a href="/Admin/Tags/Index"><i class="icon icon-circle-o"></i> Tag əlavə et</a>
+                                <a href="/Admin/ProductToTags/Index"><i class="icon icon-circle-o"></i>Tag və Məhsul</a>
+                                <a href="/Admin/Categories/Index"><i class="icon icon-circle-o"></i>Kategoriyalar</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="icon icon-account_box light-green-text s-18"></i>Users<i class="icon icon-angle-left s-18 pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="/Admin/User"><i class="icon icon-circle-o"></i>All Users</a>
+                            </li>
+                            <li>
+                                <a href="/Admin/Roles"><i class="icon icon-add"></i>Add Roles</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="icon icon-account_box light-green-text s-18"></i>Ana səhifə<i class="icon icon-angle-left s-18 pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="/Admin/IndexSliders/Index"><i class="icon icon-circle-o"></i>Slider</a>
+                            </li>
+                            <li>
+                                <a href="/Admin/Categories/Index"><i class="icon icon-add"></i>Kategoriyalar</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="icon icon-account_box light-green-text s-18"></i>Kömək<i class="icon icon-angle-left s-18 pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="/Admin/BackImageAbouts/Index"><i class="icon icon-add"></i>Background</a>
+                            </li>
+                            <li>
+                                <a href="/Admin/FaqPages/Index"><i class="icon icon-add"></i>Suallar?</a>
+                            </li>
+                            <li>
+                                <a href="/Admin/SocialInfoes/Index"><i class="icon icon-add"></i>Sosial </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="icon icon-account_box light-green-text s-18"></i>Haqqımızda<i class="icon icon-angle-left s-18 pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="/Admin/BackImageAbouts/Index"><i class="icon icon-circle-o"></i>Backgorund</a>
+                            </li>
+                            <li>
+                                <a href="/Admin/AboutSection2/Index"><i class="icon icon-add"></i>Section2</a>
+                            </li>
+                            <li>
+                                <a href="/Admin/AboutSection3/Index"><i class="icon icon-add"></i>Section3</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="icon icon-account_box light-green-text s-18"></i>Əlaqə<i class="icon icon-angle-left s-18 pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="/Admin/BackImageAbouts/Index"><i class="icon icon-circle-o"></i>Backgorund</a>
+                            </li>
+                            <li>
+                                <a href="/Admin/ContactSection2/Index"><i class="icon icon-add"></i>Section2</a>
+                            </li>
+                            <li>
+                                <a href="/Admin/ContactSection4/Index"><i class="icon icon-add"></i>Section4Photo</a>
+                            </li>
+                            <li>
+                                <a href="/Admin/ContactUserMessages/Index"><i class="icon icon-add"></i>Mesaj Göndər</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="icon icon-account_box light-green-text s-18"></i>Blog<i class="icon icon-angle-left s-18 pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="/Admin/Blogs/Index"><i class="icon icon-circle-o"></i>Blog</a>
+                                <a href="/Admin/BlogCategories/Index"><i class="icon icon-circle-o"></i>Blog Kategoriyalar</a>
+                                <a href="/Admin/BackImageBlogs/Index"><i class="icon icon-circle-o"></i>Background</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="icon icon-account_box light-green-text s-18"></i>Sifarişlər<i class="icon icon-angle-left s-18 pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="/Admin/Orders/Index"><i class="icon icon-circle-o"></i>Sifariş</a>
+                            </li>
+                            <li>
+                                <a href="/Admin/BackImageWishChecks/Index"><i class="icon icon-circle-o"></i>BackImage</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+
+
+                </ul>
+            </section>
+        </aside>
+        <!--Sidebar End-->
+        <div class="has-sidebar-left">
+            <div class="pos-f-t">
+                <div class="collapse" id="navbarToggleExternalContent">
+                    <div class="bg-dark pt-2 pb-2 pl-4 pr-2">
+                        <div class="search-bar">
+                            <input class="transparent s-24 text-white b-0 font-weight-lighter w-128 height-50" type="text"
+                                   placeholder="start typing...">
+                        </div>
+                        <a href="#" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-expanded="false"
+                           aria-label="Toggle navigation" class="paper-nav-toggle paper-nav-white active "><i></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="sticky">
+                <div class="navbar navbar-expand navbar-dark d-flex justify-content-between bd-navbar blue accent-3">
+                    <div class="relative">
+                        <a href="#" data-toggle="push-menu" class="paper-nav-toggle pp-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                    <!--Top Menu Start -->
+
+                </div>
+            </div>
+        </div>
+        <div class="page has-sidebar-left">
+            <header class="blue accent-3 relative">
+                <div class="container-fluid text-white">
+                    <div class="row p-t-b-10 ">
+                        <div class="col">
+                            <h4>
+                                <i class="icon-package"></i>
+                                Products
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <header class="my-3">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                            <h1 class="s-24">
+                                <i class="icon-pages">Admin Panel</i>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="container-fluid p-3">
+                @RenderBody()
+            </div>
+        </div>
+        <!-- Right Sidebar -->
+        <div class="control-sidebar-bg shadow white fixed"></div>
+    </div>
+    <!--/#app -->
+    <script src="~/admin/assets/js/app.js"></script>
+    <!--
+    --- Footer Part - Use Jquery anywhere at page.
+    --- http://writing.colin-gourlay.com/safely-using-ready-before-including-jquery/
+    -->
+    <script>(function ($, d) { $.each(readyQ, function (i, f) { $(f) }); $.each(bindReadyQ, function (i, f) { $(d).bind("ready", f) }) })(jQuery, document)</script>
+    @await RenderSectionAsync("AdminScripts", required: false)
+
+</body>
+</html>

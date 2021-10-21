@@ -1,0 +1,133 @@
+﻿@{
+    ViewData["Title"] = "Əlaqə";
+}
+
+@model ContactVm
+<!-- Start Single-Contact -->
+<section style="background-image:url(@Model.BackImageAbout.PhotoUrl);" id="single-list">
+    <div class="container">
+        <h1 style="color:@Model.BackImageAbout.Color">Əlaqə</h1>
+        <ol class="breadcrumb">
+            <li><a style="color:@Model.BackImageAbout.Color" href="/">Ana səhifə</a></li>
+            <li><span style="color:@Model.BackImageAbout.Color">Əlaqə</span></li>
+        </ol>
+    </div>
+</section>
+<!-- End Single-Contact -->
+<!----------------------------------->
+<!-- Start Social-Contact -->
+<section id="social-contact">
+    <div class="container">
+        <div class="row">
+            @foreach (var cont in Model.ContactSection2s)
+            {
+                <div class="col-md-6 col-lg-4 m-auto">
+                    <div class="contact-card">
+                        <i class="@cont.Icon"></i>
+                        <h4>@cont.Header</h4>
+                        <p>
+                            <a href="#">@cont.Title</a>
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- End Social-Contact -->
+<!----------------------------------->
+<!-- Start DeliveryInfo -->
+<section id="deliveryinfoContact">
+    <div class="container ">
+        <div class="row ">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <i style="display: block;" class="fas fa-shopping-basket"></i>
+                        <h4>Online alışveriş</h4>
+                        <p>Mağazada alış-veriş etmək çox asandır.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <i style="display: block;" class="fab fa-expeditedssl"></i>
+                        <h4>Təhlükəsiz ödəmə</h4>
+                        <p>Capped at $39 per order</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <i style="display: block;" class="fas fa-shipping-fast"></i>
+                        <h4>Pulsuz çatdırılma</h4>
+                        <p>59 manat üzəri çatdırılma pulsuz</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <i style="display: block;" class="fab fa-pagelines"></i>
+                        <h4>Təbii məhsul</h4>
+                        <p>100% təbii məhsul</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End DeliveryInfo -->
+<!----------------------------------->
+<!-- Start Contact-message -->
+<section id="contact-message">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                <div class="contact-map">
+                    <img src="@Model.ContactSection4.PhotoUrl" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                <form method="post" class="contact-form">
+                    <h4>Məlumatları daxil edin.</h4>
+                    @if (TempData["Success"] != null)
+                    {
+                        <p class="alert alert-success">@TempData["Success"]</p>
+                    }
+                    <div class="form-group  ">
+                        <div class="form-input-group ">
+                            <input asp-for="Fullname" class="form-control" type="text" placeholder="Adınız">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <div class="form-group  ">
+                        <div class="form-input-group ">
+                            <input asp-for="Email" class="form-control" type="email" placeholder="Email">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="form-input-group ">
+                            <input asp-for="PhoneNumber" class="form-control" type="tel" placeholder="Telefon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                    </div>
+                    <div class="form-input-group">
+                        <textarea asp-for="Message" style="height: 157px; padding-top: 10px;" class="form-control"
+                                  placeholder="Mesaj"></textarea>
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <button type="submit" class="form-btn">
+                        <i class="fas fa-envelope"></i>
+                        <span>Mesaj göndər</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Contact-message -->
+<!----------------------------------->

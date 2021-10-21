@@ -1,0 +1,15 @@
+C:\Users\Acer\source\repos\Shopping\Sharedd\bin\Debug\net5.0\Sharedd.deps.json
+C:\Users\Acer\source\repos\Shopping\Sharedd\bin\Debug\net5.0\Sharedd.dll
+C:\Users\Acer\source\repos\Shopping\Sharedd\bin\Debug\net5.0\ref\Sharedd.dll
+C:\Users\Acer\source\repos\Shopping\Sharedd\bin\Debug\net5.0\Sharedd.pdb
+C:\Users\Acer\source\repos\Shopping\Sharedd\bin\Debug\net5.0\Entities.dll
+C:\Users\Acer\source\repos\Shopping\Sharedd\bin\Debug\net5.0\Entities.pdb
+C:\Users\Acer\source\repos\Shopping\Sharedd\obj\Debug\net5.0\Sharedd.csproj.AssemblyReference.cache
+C:\Users\Acer\source\repos\Shopping\Sharedd\obj\Debug\net5.0\Sharedd.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Acer\source\repos\Shopping\Sharedd\obj\Debug\net5.0\Sharedd.AssemblyInfoInputs.cache
+C:\Users\Acer\source\repos\Shopping\Sharedd\obj\Debug\net5.0\Sharedd.AssemblyInfo.cs
+C:\Users\Acer\source\repos\Shopping\Sharedd\obj\Debug\net5.0\Sharedd.csproj.CoreCompileInputs.cache
+C:\Users\Acer\source\repos\Shopping\Sharedd\obj\Debug\net5.0\Sharedd.csproj.CopyComplete
+C:\Users\Acer\source\repos\Shopping\Sharedd\obj\Debug\net5.0\Sharedd.dll
+C:\Users\Acer\source\repos\Shopping\Sharedd\obj\Debug\net5.0\ref\Sharedd.dll
+C:\Users\Acer\source\repos\Shopping\Sharedd\obj\Debug\net5.0\Sharedd.pdb

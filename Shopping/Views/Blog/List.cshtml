@@ -1,0 +1,184 @@
+﻿@{
+    ViewData["Title"] = "Bloqlar";
+}
+@model BlogVm
+@inject Services.BlogService BlogService
+    <style>
+        .disabled {
+            pointer-events: none;
+        }
+    </style>
+<!-- Start Single-Blog-List -->
+<section style="background-image:url(@Model.BackImageBlogs.PhotoUrl);" id="single-list">
+    <div class="container">
+        <h1 style="color:@Model.BackImageBlogs.Color">Bloqlar</h1>
+        <ol class="breadcrumb">
+            <li><a style="color:@Model.BackImageBlogs.Color" href="/">Ana səhifə</a></li>
+            <li><span style="color:@Model.BackImageBlogs.Color">Bloqlar </span></li>
+        </ol>
+    </div>
+</section>
+<!-- End Single-Blog-List -->
+<!----------------------------------->
+<!-- Start Single-List -->
+<section id="blog-list">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="row">
+                    @foreach (var blogList in Model.BlogList)
+                    {
+                        <div class="col-md-6 col-sm-6 col-lg-6 col-xxl-3 col-xl-4 col-12 ">
+                            <div class="blogCard ">
+                                <div class="thumb">
+                                    <a href="@Url.Action("Detail","Blog",new { id=blogList.ID})" class="image">
+                                        <img src="@blogList.PhotoUrl" alt="Product" />
+                                    </a>
+                                    <span class="badges">
+                                        <span class="time">@blogList.PublishDate.ToString("dd MMM yyyy")</span>
+                                    </span>
+                                    <span class="badges1">
+                                        <span class="category">@blogList.BlogCategory.Name</span>
+                                    </span>
+                                </div>
+                                <div class="content">
+                                    <h4>@blogList.Header</h4>
+                                    <p>
+                                        @if (blogList.Title.Length > 60 && blogList.Title.Length > 0)
+                                        {
+
+                                            <span>@blogList.Title.Substring(0, 60) ...</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@blogList.Title</span>
+
+                                        }
+                                    </p>
+                                    <a href="/Blog/Detail/@blogList.ID">Daha ətraflı <i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!--  Pagination Area Start -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="bottom-paginate">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link @(Model.Pager.CurrentPage==1? "disabled":"")" href="@Url.Action("List","Blog",new { pageNo=Model.Pager.CurrentPage-1})">
+                                        <i class="fas fa-long-arrow-alt-left"></i>
+                                    </a>
+                                </li>
+                                @for (int mypage = Model.Pager.StartPage; mypage < Model.Pager.EndPage + 1; mypage++)
+                                {
+                                    var active = mypage == Model.Pager.CurrentPage ? "active" : string.Empty;
+                                    <li class="page-item"><a class="page-link @active" href="@Url.Action("List","Blog",new { pageNo=mypage})">@mypage</a></li>
+                                }
+                                <li class="page-item">
+                                    <a class="page-link @(Model.Pager.CurrentPage==Model.Pager.EndPage? "disabled":"")" href="@Url.Action("List","Blog",new { pageNo=Model.Pager.CurrentPage+1})">
+                                        <i class="fas fa-long-arrow-alt-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--  Pagination Area End -->
+            </div>
+            <div class="col-md-7 col-lg-3">
+                <div class="blog-widget">
+                    <h3 class="blog-widget-title">Önə çıxanlar</h3>
+                    @foreach (var popBlog in Model.BlogPop)
+                    {
+                        <ul class="blog-widget-feed">
+                            <li>
+                                <a class="blog-widget-media" href="@Url.Action("Detail","Blog",new { id=popBlog.ID})">
+                                    <img src="@popBlog.PhotoUrl"
+                                         alt="blog-widget">
+                                </a>
+                                <div class="blog-widget-text">
+                                    <h6><a href="/Blog/Detail/@popBlog.ID">@popBlog.Header </a></h6>
+                                    <p>@popBlog.PublishDate.ToString("dd MMM yyyy")</p>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+
+
+                </div>
+                <div class="blog-widget">
+                    <h3 class="blog-widget-title">Kategoriyalar</h3>
+                    <ul class="blog-widget-category">
+                        @foreach (var topCat in Model.Categories)
+                        {
+                            <li><a href="@Url.Action("List","Blog",new { id=topCat.ID})">@topCat.Name <span>@(topCat.Blogs.Count())</span></a></li>
+
+                        }
+                    </ul>
+                </div>
+                <div class="blog-widget">
+                    <h3 class="blog-widget-title">Bizi izləyin</h3>
+                    <ul class="blog-widget-social">
+                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-telegram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-whatsapp"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Single-List -->
+<!----------------------------------->
+<!-- Start DeliveryInfo -->
+<section id="deliveryinfo">
+    <div class="container ">
+        <div class="row ">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/info1.png" alt="">
+                        <h4>Online alışveriş</h4>
+                        <p>Mağazada alış-veriş etmək çox asandır.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/info2.png" alt="">
+                        <h4>Təhlükəsiz alış-veriş</h4>
+                        <p>
+                            təhlükəsiz ödəmə vasitəsi
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/info3.png" alt="">
+                        <h4>Pulsuz çatdırılma</h4>
+                        <p>59 manat üzəri çatdırılma pulsuz</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/info4.png" alt="">
+                        <h4>Təbii məhsul</h4>
+                        <p>100% təbii məhsul</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!----------------------------------->
+<!-- End DeliveryInfo -->

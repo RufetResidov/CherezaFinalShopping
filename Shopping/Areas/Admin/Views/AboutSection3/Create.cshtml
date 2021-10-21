@@ -1,0 +1,80 @@
+﻿@model Entities.AboutSection3
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>AboutSection3</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Header" class="control-label"></label>
+                <input asp-for="Header" class="form-control" />
+                <span asp-validation-for="Header" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Icon" class="control-label"></label>
+                <input asp-for="Icon" class="form-control" />
+                <span asp-validation-for="Icon" class="text-danger"></span>
+                <div class="icon-hover">
+                    <i class="fab fa-telegram-plane"></i>
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fas fa-phone"></i>
+                    <i class="fab fa-linkedin-in"></i>
+                    <i class="fas fa-mail-bulk"></i>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-whatsapp"></i>
+                    <i class="fas fa-calendar-alt"></i>
+                    <i class="fas fa-cart-arrow-down"></i>
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-dropbox"></i>
+                    <i class="fas fa-download"></i>
+                    <i class="fa-archive"></i>
+                    <i class="fa-credit-card"></i>
+                    <i class="fa-check-circle"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-leaf"></i>
+                    <i class="fa-location-arrow"></i>
+                    <i class="fas fa-mortar-pestle"></i>
+                    <i class="fa-shopping-basket"></i>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="ModifiedOn" class="control-label"></label>
+                <input asp-for="ModifiedOn" class="form-control" />
+                <span asp-validation-for="ModifiedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section AdminScripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(".icon-hover i").click(function () {
+            const cl = ($(this).attr("class"));
+            $("#Icon").val(cl);
+            $(".icon-hover i").removeClass("active");
+            $(this).addClass("active")
+        })
+    </script>
+}

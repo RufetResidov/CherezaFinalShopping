@@ -1,0 +1,473 @@
+﻿@{
+    ViewData["Title"] = "Ana Səhifə";
+}
+@model IndexVm
+<!-- Start Slider -->
+<div class="slider ">
+    @foreach (var slider in Model.IndexSliders)
+    {
+        <div class="image-slider">
+            <img src="@slider.PhotoUrl" alt="">
+            <div class="col-lg-5 col-md-7 col-8 slider-text ">
+                <span class="span1">@slider.Span1 </span>
+                <span>@slider.Span2</span>
+                <p>
+                    @slider.Description
+                </p>
+                <a href="/Product/Shop">İndi Alın</a>
+            </div>
+        </div>
+
+    }
+
+</div>
+<!-- End Slider -->
+<!----------------------------------->
+<!-- End OfferYou -->
+@if (Model.Categories.Count > 0 && Model.Categories != null)
+{
+    <section class="offeryou">
+        <div class="title">
+            <h2>Kategoriyalar</h2>
+        </div>
+        <div class="container">
+            <div class="swiper-offeryou">
+                @foreach (var cat in Model.Categories)
+                {
+                    <div class="swiper-slide p-2">
+                        <a href="@Url.Action("Shop","Product",new { id=cat.ID})">
+                            <img src="@cat.PhotoUrl" alt="">
+                            <p>@cat.Name</p>
+                        </a>
+                    </div>
+
+                }
+            </div>
+        </div>
+        <!-- End Top Duration -->
+    </section>
+}
+<!-- End OfferYou -->
+<!----------------------------------->
+<!-- Start Top Product -->
+<section id="topProduct">
+    <div class="container">
+        <div class="topProductCategory">
+            <h2>Günün Məhsulları</h2>
+            <div>
+                <ul id="tabs">
+                    <li>
+                        <a href="#tab1">
+                            <i class="fas fa-balance-scale"></i><span>Çox satılanlar</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#tab2">
+                            <i class="fas fa-percent"></i><span>Endirimli məhsullar</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#tab3">
+                            <i class="fas fa-star"></i><span>Reytinq</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="topCategory" id="tab1">
+            <div class="tab-content">
+                <div class="row">
+                    @foreach (var proSale in Model.IsSaleProducts)
+                    {
+                        string myPictue = PictureHelper.GetCoverImage(proSale.ThumbnailPictureID, proSale.ProductPictures);
+
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4">
+                            <!-- Single Prodect -->
+                            <div class="product">
+                                <div class="thumb">
+                                    <a href="@Url.Action("SingleProduct","Product",new { id=proSale.ID})" class="image">
+                                        @if (proSale.ProductPictures.Count > 1)
+                                        {
+                                            <img class="product__image" src="@myPictue" alt="Product" />
+                                            <img class="hover-image" src="@proSale.ProductPictures[1].Picture.PictureUrl" alt="Product" />
+
+                                        }
+                                        else
+                                        {
+                                            <img src="@myPictue" alt="Product" />
+                                        }
+                                    </a>
+                                    <span class="badges">
+
+                                            @if (proSale.isNew)
+                                            {
+                                                <span class="new">New</span>
+                                            }
+                                            @if (proSale.Discount != 0 && proSale.Discount != null)
+                                            {
+                                                <span class="sale">-@((int)(proSale.Discount * 100 / proSale.Price)) %</span>
+                                            }
+                                        </span>
+                                    <div class="actions">
+                                        <a href="#" class="wishlist" proId="@proSale.ID"><i class="far fa-heart"></i></a>
+                                        <a href="#" class="view" data-id="@proSale.ID" data-bs-toggle="modal"
+                                           data-bs-target="#exampleModal"><i class="fas fa-arrows-alt"></i></a>
+                                    </div>
+                                    <button proId="@proSale.ID" title="Səbətə at" class="add-to-cart" data-action="ADD_TO_CART">
+                                        Səbətə at <i class="fas fa-shopping-basket"></i>
+                                    </button>
+                                </div>
+                                <div class="content">
+                                    <h5 class="title"><a class="product__name" href="shop-left-sidebar.html">@proSale.Name</a></h5>
+                                    <span class="price">
+                                        @if (proSale.Discount != 0 && proSale.Discount!=null)
+                                        {
+
+                                            <span class="old"><del>₼ @proSale.Price</del></span>
+                                        }
+                                        <span class="new ">₼<span class="product__price">@(proSale.Price- proSale.Discount)</span></span>
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="topCategory" id="tab2">
+            <div class="tab-content">
+                <div class="row">
+                    @foreach (var proDisc in Model.DiscountProducts)
+                    {
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4">
+                            <!-- Single Prodect -->
+                            <div class="product">
+                                <div class="thumb">
+                                    <a href="@Url.Action("SingleProduct","Product",new { id=proDisc.ID})" class="image">
+                                        @if (proDisc.ProductPictures.Count > 1)
+                                        {
+                                            <img class="product__image" src="@proDisc.ProductPictures[0].Picture.PictureUrl" alt="Product" />
+                                            <img class="hover-image" src="@proDisc.ProductPictures[1].Picture.PictureUrl" alt="Product" />
+
+                                        }
+                                        else
+                                        {
+                                            <img src="@proDisc.ProductPictures[0].Picture.PictureUrl" alt="Product" />
+
+                                        }
+                                    </a>
+                                    <span class="badges">
+                                            @if (proDisc.isNew)
+                                            {
+                                                <span class="new">new</span>
+                                            }
+                                            @if (proDisc.Discount != 0 && proDisc.Discount!=null)
+                                            {
+                                                <span class="sale">-@((int)(proDisc.Discount * 100 / proDisc.Price)) %</span>
+                                            }
+                                        </span>
+                                    <div class="actions">
+                                        <a href="#" class="wishlist" proId="@proDisc.ID"><i class="far fa-heart"></i></a>
+                                        <a href="#" class="view" data-id="@proDisc.ID" data-bs-toggle="modal"
+                                           data-bs-target="#exampleModal"><i class="fas fa-arrows-alt"></i></a>
+                                    </div>
+                                    <button proId="@proDisc.ID" title="Səbətə at" class="add-to-cart" data-action="ADD_TO_CART">
+                                        Səbətə at <i class="fas fa-shopping-basket"></i>
+                                    </button>
+                                </div>
+                                <div class="content">
+                                    <h5 class="title"><a class="product__name" href="shop-left-sidebar.html">@proDisc.Name</a></h5>
+                                    <span class="price">
+                                        @if (proDisc.Discount != 0)
+                                        {
+
+                                            <span class="old"><del>₼ @proDisc.Price</del></span>
+                                        }
+                                        <span class="new ">₼<span class="product__price">@(proDisc.Price- proDisc.Discount)</span></span>
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="topCategory" id="tab3">
+            <div class="tab-content">
+                <div class="row">
+                    @foreach (var proRate in Model.IsRatingProducts)
+                    {
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4">
+                            <!-- Single Prodect -->
+                            <div class="product">
+                                <div class="thumb">
+                                    <a href="@Url.Action("SingleProduct","Product",new { id=proRate.ID})" class="image">
+                                        @if (proRate.ProductPictures.Count > 1)
+                                        {
+                                            <img class="product__image" src="@proRate.ProductPictures[0].Picture.PictureUrl" alt="Product" />
+                                            <img class="hover-image" src="@proRate.ProductPictures[1].Picture.PictureUrl" alt="Product" />
+
+
+                                        }
+                                        else
+                                        {
+                                            <img src="@proRate.ProductPictures[0].Picture.PictureUrl" alt="Product" />
+
+                                        }
+                                    </a>
+                                    <span class="badges">
+
+                                            @if (proRate.isNew)
+                                            {
+                                                <span class="new">New</span>
+                                            }
+                                            @if (proRate.Discount != 0)
+                                            {
+                                                <span class="sale">-@((int)(proRate.Discount * 100 / proRate.Price)) %</span>
+                                            }
+                                        </span>
+                                    <div class="actions">
+                                        <a href="#" class="wishlist"><i class="far fa-heart"></i></a>
+                                        <a href="#" class="view" data-id="@proRate.ID" data-bs-toggle="modal"
+                                           data-bs-target="#exampleModal"><i class="fas fa-arrows-alt"></i></a>
+                                    </div>
+                                    <button proId="@proRate.ID" title="Səbətə at" class="add-to-cart" data-action="ADD_TO_CART">
+                                        Səbətə at <i class="fas fa-shopping-basket"></i>
+                                    </button>
+                                </div>
+                                <div class="content">
+                                    <h5 class="title"><a class="product__name" href="shop-left-sidebar.html">@proRate.Name</a></h5>
+                                    <span class="price">
+                                        @if (proRate.Discount != 0)
+                                        {
+
+                                            <span class="old"><del>₼ @proRate.Price</del></span>
+                                        }
+                                        <span class="new ">₼<span class="product__price">@(proRate.Price- proRate.Discount)</span></span>
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- End Top Product -->
+<!----------------------------------->
+<!-- Start Top Duration -->
+<section id="duration">
+    <div class="container ">
+        <div class="row all">
+            <div class="col-lg-3 col-12 col-md-6 mb-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/indexcount1.png" alt="">
+                        <span class="counter" data-count="205">0</span>
+                        <h3>Müştərilər</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12 col-md-6 mb-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/indexcount2.png" alt="">
+                        <span class="counter" data-count="289">0</span>
+                        <h3>Məhsul sayı</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12 col-md-6 mb-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/indexcount3.png" alt="">
+                        <span class="counter" data-count="20">0</span>
+                        <h3>Çatdırılmalar</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12 col-md-6 mb-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/indexcount4.png" alt="">
+                        <span class="counter" data-count="24">0</span>
+                        <h3>İllik Təcrübə</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- End Top Duration -->
+<!----------------------------------->
+<!-- Start newProduct -->
+<section id="newProduct">
+    <div class="container">
+        <div class="new-product-content">
+            <h2>Yeni Məhsullar</h2>
+            <h6>Yalnız sizin üçün</h6>
+        </div>
+        <div class="newProductSlider">
+            @foreach (var nwPro in Model.IsNewProducts)
+            {
+                <!-- Single Prodect -->
+                <div class="product p-2">
+                    <div class="thumb">
+                        <a href="@Url.Action("SingleProduct","Product",new { id=nwPro.ID})" class="image">
+                            @if (nwPro.ProductPictures.Count > 1)
+                            {
+                                <img class="product__image" src="@nwPro.ProductPictures[0].Picture.PictureUrl" alt="Product" />
+                                <img class="hover-image" src="@nwPro.ProductPictures[1].Picture.PictureUrl" alt="Product" />
+
+                            }
+                            else
+                            {
+                                <img src="@nwPro.ProductPictures[0].Picture.PictureUrl" alt="Product" />
+
+                            }
+                        </a>
+                        <span class="badges">
+
+                                @if (nwPro.isNew)
+                                {
+                                    <span class="new">New</span>
+                                }
+                                @if (nwPro.Discount != 0)
+                                {
+                                    <span class="sale">-@((int)(nwPro.Discount * 100 / nwPro.Price)) %</span>
+                                }
+                            </span>
+                        <div class="actions">
+                            <a href="#" class="wishlist"><i class="far fa-heart"></i></a>
+                            <a href="#" class="view" data-id="@nwPro.ID" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <i class="fas fa-arrows-alt"></i>
+                            </a>
+                        </div>
+                        <button proId="@nwPro.ID" title="Səbətə at" class="add-to-cart" data-action="ADD_TO_CART">
+                            Səbətə at <i class="fas fa-shopping-basket"></i>
+                        </button>
+                    </div>
+                    <div class="content">
+                        <h5 class="title"><a class="product__name" href="@Url.Action("SingleProduct","Product",new { id=nwPro.ID})">@nwPro.Name</a></h5>
+                        <span class="price">
+                            @if (nwPro.Discount != 0)
+                            {
+
+                                <span class="old"><del>₼ @nwPro.Price</del></span>
+                            }
+                            <span class="new ">₼<span class="product__price">@(nwPro.Price- nwPro.Discount)</span></span>
+                        </span>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+
+</section>
+<!-- End newProduct -->
+<!----------------------------------->
+<!-- Start Blog -->
+<section id="blog">
+    <div class="container">
+        <div class="blogText">
+            <h3>BLOQ</h3>
+            <p>Meyvə qurusu, çərəzlər, çaylar və bitkilər haqqında məlumat</p>
+        </div>
+        <div class="row ">
+            @foreach (var blog in Model.Blogs)
+            {
+                <div class="col-lg-4  col-md-10 col-11 m-auto">
+                    <div class="blogBox py-3">
+                        <div class="thumb">
+                            <a href="@Url.Action("Detail","Blog",new { id=blog.ID})" class="image">
+                                <img src="@blog.PhotoUrl" alt="Product" />
+                            </a>
+                            <span class="badges">
+                                <span class="time">@blog.PublishDate.ToString("dd MMM yyyy")</span>
+                            </span>
+                            <span class="badges1">
+                                <span class="category">@blog.BlogCategory.Name</span>
+                            </span>
+                        </div>
+                        <div class="content">
+                            <h4>@blog.Header</h4>
+                            <p>
+                                @if (blog.Title.Length > 100 && blog.Title.Length > 0)
+                                {
+                                    <span>@blog.Title.Substring(0, 100)...</span>
+                                }
+                                else
+                                {
+                                    <span>@blog.Title</span>
+                                }
+                            </p>
+                            <a href="/Blog/Detail/@blog.ID">Daha ətraflı <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</section>
+<!-- End Blog -->
+<!----------------------------------->
+<!-- Start DeliveryInfo -->
+<section id="deliveryinfo">
+    <div class="container ">
+        <div class="row ">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/info1.png" alt="">
+                        <h4>Online alışveriş</h4>
+                        <p>Mağazada alış-veriş etmək çox asandır.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/info2.png" alt="">
+                        <h4>Təhlükəsiz alış-veriş</h4>
+                        <p>
+                            təhlükəsiz ödəmə vasitəsi
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/info3.png" alt="">
+                        <h4>Pulsuz çatdırılma</h4>
+                        <p>59 manat üzəri çatdırılma pulsuz</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/info4.png" alt="">
+                        <h4>Təbii məhsul</h4>
+                        <p>100% təbii məhsul</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End DeliveryInfo -->
+<!----------------------------------->

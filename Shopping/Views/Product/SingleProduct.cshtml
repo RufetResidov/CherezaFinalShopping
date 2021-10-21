@@ -1,0 +1,340 @@
+﻿@{
+    ViewData["Title"] = "Məhsullar";
+}
+@model ProductVm
+<!-- single-about start -->
+<section style="background-image:url(@Model.BackImageProduct.PhotoUrl);" id="single-list">
+    <div class="container">
+        <h1>Məhsul haqqında</h1>
+        <ol class="breadcrumb">
+            <li><a href="/">Ana səhifə</a></li>
+            <li><span>Məhsul haqqında</span></li>
+        </ol>
+    </div>
+</section>
+<!-- single-about end -->
+<!---------------------------------------------------------------->
+<!-- Product Details Area Start -->
+
+<section id="product-details-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 col-xs-12 col-12 ">
+                <!-- Swiper -->
+                <div class="swiper-top">
+                    @foreach (var item in Model.SingleProduct.ProductPictures)
+                    {
+                        <div class="swiper-slide ">
+                            <img class="product__image" src="@item.Picture.PictureUrl" alt="">
+                        </div>
+                    }
+                </div>
+                <div class="swiper-bottom">
+                    @foreach (var item in Model.SingleProduct.ProductPictures)
+                    {
+                        <div class="swiper-slide ">
+                            <img class="img-fluid" src="@item.Picture.PictureUrl" alt="">
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12 col-xs-12 col-12">
+                <div class="product-details-content">
+                    <h2 class="product__name">@Model.SingleProduct.Name</h2>
+                    <span class="price">
+                        @if (Model.SingleProduct.Discount != 0 && Model.SingleProduct.Discount != null)
+                        {
+                            <span class="old"><del>₼@Model.SingleProduct.Price</del></span>
+                        }
+                        <span class="new ">₼<span class="product__price">@(Model.SingleProduct.Price- Model.SingleProduct.Discount)</span></span>
+                    </span>
+
+                    <div class="price-details-quality">
+                        <div class="cart-action-group">
+                            <div class="product-action">
+                                <button class="action-single-minus" title="Quantity Minus">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <input class="action-input-quantity" data-id="@Model.SingleProduct.ID" maxlength="3" title="Quantity Number" disabled type="text"
+                                       name="quantity" value="@(Model.Quantity!=null && Model.Quantity>0?Model.Quantity*100:100)">
+                                <button class="action-single-plus" title="Quantity Plus">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button proId="@Model.SingleProduct.ID" title="Add To Cart" class="add-cart btn btn-priwmary " data-action="ADD_TO_CART">Səbətə əlavə et</button>
+                    </div>
+                    <p style="font-size:20px; font-weight:600;" class="product-description">
+                        @Model.SingleProduct.Description
+                    </p>
+                    <div class="product-widget">
+                        <h3 class="product-widget-title">Əlaqə </h3>
+                        <ul class="product-widget-social">
+                            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                            <li><a href="#"><i class="fab fa-telegram"></i></a></li>
+                            <li><a href="#"><i class="fab fa-whatsapp"></i></a></li>
+                            <li><a href="#"><i class="fas fa-phone"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Details Area End -->
+<!---------------------------------------------------------------->
+<!-- Single-Same-Product Start-->
+
+@if (Model.SameProducts.Count > 0 && Model.SameProducts != null)
+{
+    <section class="single-same-product py-5">
+        <div class="container">
+            <!-- section title start -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title-single-product text-left mb-11">
+                        <h2 class="title">@Model.SameProducts.Count() Eyni Kateqoriyada Oxşar məhsul</h2>
+                    </div>
+                </div>
+            </div>
+            <!-- section title start -->
+            <div class="likeProduct">
+                <div class="singleProductSlider">
+                    @foreach (var sPro in Model.SameProducts)
+                    {
+                        <div class="product p-2">
+                            <div class="thumb">
+                                <a href="@Url.Action("SingleProduct","Product",new { id=sPro.ID})" class="image">
+                                    @if (sPro.ProductPictures.Count > 1)
+                                    {
+                                        <img class="product__image" src="@sPro.ProductPictures[0].Picture.PictureUrl" alt="Product" />
+                                        <img class="hover-image" src="@sPro.ProductPictures[1].Picture.PictureUrl" alt="Product" />
+
+                                    }
+                                    else
+                                    {
+                                        <img src="@sPro.ProductPictures[0].Picture.PictureUrl" alt="Product" />
+
+                                    }
+                                </a>
+                                <span class="badges">
+
+                                    @if (sPro.isNew)
+                                    {
+                                        <span class="new">New</span>
+                                    }
+                                    @if (sPro.Discount != 0 && sPro.Discount != null)
+                                    {
+                                        <span class="sale">-@((int)(sPro.Discount * 100 / sPro.Price)) %</span>
+                                    }
+                                </span>
+                                <div class="actions">
+                                    <a href="#" class="wishlist" proId="@sPro.ID"><i class="far fa-heart"></i></a>
+                                    <a href="#" class="view" data-id="@sPro.ID" data-bs-toggle="modal"
+                                       data-bs-target="#exampleModal"><i class="fas fa-arrows-alt"></i></a>
+                                </div>
+                                <button proId="@sPro.ID" title="Səbətə at" class="add-to-cart" data-action="ADD_TO_CART">
+                                    Səbətə at <i class="fas fa-shopping-basket"></i>
+                                </button>
+                            </div>
+                            <div class="content">
+                                <h5 class="title"><a class="product__name" href="@Url.Action("SingleProduct","Product",new { id=sPro.ID})">@sPro.Name</a></h5>
+                                <span class="price">
+                                    @if (sPro.Discount != 0 && sPro.Discount != null)
+                                    {
+
+                                        <span class="old"><del>₼ @sPro.Price</del></span>
+                                    }
+                                    <span class="new ">₼<span class="product__price">@(sPro.Price- sPro.Discount)</span></span>
+                                </span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<!-- Single-Same-Product End-->
+<!-- Single-Like-Product Start-->
+@if (Model.FeaturedProducts.Count > 0 && Model.FeaturedProducts != null)
+{
+    <section id="single-like-product py-5">
+        <div class="container">
+            <!-- section title start -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title-single-product text-left mb-11">
+                        <h2 style="text-align: center;" class="title">Bəyənə biləcəyiniz məhsullar</h2>
+                    </div>
+                </div>
+            </div>
+            <!-- section title start -->
+            <div class="likeProduct">
+                <div class="singleProductSlider">
+                    @foreach (var fPro in Model.FeaturedProducts)
+                    {
+                        <div class="product p-2">
+                            <div class="thumb">
+                                <a href="@Url.Action("SingleProduct","Product",new { id=fPro.ID})" class="image">
+                                    @if (fPro.ProductPictures.Count > 1)
+                                    {
+                                        <img class="product__image" src="@fPro.ProductPictures[0].Picture.PictureUrl" alt="Product" />
+                                        <img class="hover-image" src="@fPro.ProductPictures[1].Picture.PictureUrl" alt="Product" />
+
+                                    }
+                                    else
+                                    {
+                                        <img src="@fPro.ProductPictures[0].Picture.PictureUrl" alt="Product" />
+
+                                    }
+                                </a>
+                                <span class="badges">
+
+                                    @if (fPro.isNew)
+                                    {
+                                        <span class="new">New</span>
+                                    }
+                                    @if (fPro.Discount != 0 && fPro.Discount != null)
+                                    {
+                                        <span class="sale">-@((int)(fPro.Discount * 100 / fPro.Price)) %</span>
+                                    }
+                                </span>
+                                <div class="actions">
+                                    <a href="#" class="wishlist" proId="@fPro.ID"><i class="far fa-heart"></i></a>
+                                    <a href="#" class="view" data-id="@fPro.ID" data-bs-toggle="modal"
+                                       data-bs-target="#exampleModal"><i class="fas fa-arrows-alt"></i></a>
+                                </div>
+                                <button proId="@fPro.ID" title="Səbətə at" class="add-cart" data-action="ADD_TO_CART">
+                                    Səbətə at <i class="fas fa-shopping-basket"></i>
+                                </button>
+                            </div>
+                            <div class="content">
+                                <h5 class="title"><a class="product__name" href="@Url.Action("SingleProduct","Product",new { id=fPro.ID})">@fPro.Name</a></h5>
+                                <span class="price">
+                                    @if (fPro.Discount != 0 && fPro.Discount != null)
+                                    {
+
+                                        <span class="old"><del>₼ @fPro.Price</del></span>
+                                    }
+                                    <span class="new ">₼<span class="product__price">@(fPro.Price- fPro.Discount)</span></span>
+                                </span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<!-- Single-Like-Product End-->
+<!---------------------------------------------------------------->
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            let cookieVal = getCookie("myCart");
+
+            if (typeof cookieVal !== "undefined" && cookieVal !== "" && cookieVal !== null) {
+                cookieVal = [...cookieVal.split("-")]
+                let uniqeQuantity = [...new Set(cookieVal)];
+                $(".shop-quantity").text(uniqeQuantity.length);
+                $(".cart-total-quantity").text(uniqeQuantity.length);
+            }
+            let productIds = cookieVal != "" ? cookieVal : [];
+            $(".add-cart").click(function () {
+                debugger;
+                const productId = Number($(this).attr("proId"))
+                var plusminusbox = Number($(".action-input-quantity").val());
+                console.log(plusminusbox)
+                debugger;
+                if (typeof plusminusbox == "number") {
+                  productIds = productIds.filter(x => x != productId);
+                    for (let i = 0; i < plusminusbox/100; i++) {
+                        productIds.push(productId);
+                    }
+                } else {
+                    productIds.push(productId);
+                }
+
+
+
+                setCookie('myCart', productIds.join("-"), 7);
+                let uniqeQuantity = [...new Set(productIds)];
+                $(".shop-quantity").text(uniqeQuantity.length);
+                $(".cart-total-quantity").text(uniqeQuantity.length);
+
+
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Məhsul səbətə əlavə olundu',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+
+            $(".action-single-plus").on("click", function () {
+            
+                //let productId = Number($(this).closest(".product-action").children(".action-input").attr("data-id"))
+                let inputDOM = $(this).closest(".product-action").children(".action-input-quantity").get(0);
+                let inputVal = Number(inputDOM.value);
+
+                if (inputVal >= 100) {
+                    //inputDOM.value = currentVal * 100;
+
+                    inputVal += 100
+                    inputDOM.value = inputVal
+                    //var shopPrice = Number($(this).parents(".cart-action-group").find(".shopPrice").attr("data-price"));
+                    //$(this).parents(".cart-action-group").find(".shopPrice").text(shopPrice * Number(inputVal / 100));
+                    //productIds = productIds.filter(x => x != productId);
+                    //for (let j = 0; j < inputVal / 100; j++) {
+                    //    productIds.push(productId);
+                    //}
+                    //setCookie('myCart', productIds.join("-"), 7);
+                }
+
+            });
+            $(".action-single-minus").on("click", function () {
+                //let productId = Number($(this).closest(".product-action").children(".action-input").attr("data-id"))
+                let inputDOM = $(this).closest(".product-action").children(".action-input-quantity").get(0);
+                let inputVal = Number(inputDOM.value);
+                if (inputVal > 100) {
+                    inputVal -= 100;
+                    inputDOM.value = inputVal
+                    //var shopPrice = Number($(this).parents(".cart-action-group").find(".shopPrice").attr("data-price"));
+                    //$(this).parents(".cart-action-group").find(".shopPrice").text(shopPrice * inputVal / 100);
+                    //productIds = productIds.filter(x => x != productId);
+                    //for (let j = 0; j < inputVal / 100; j++) {
+                    //    productIds.push(productId);
+                    //}
+                    //setCookie('myCart', productIds.join("-"), 7);
+                }
+            })
+            function setCookie(cname, cvalue, exdays) {
+                const d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                let expires = "expires=" + d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
+
+            function getCookie(cname) {
+                let name = cname + "=";
+                let ca = document.cookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+        })
+
+
+    </script>
+ }

@@ -1,0 +1,136 @@
+﻿@{
+    ViewData["Title"] = "Bloq";
+}
+@model BlogVm
+@inject Services.BlogService BlogService
+<!-- Start Single-Blog-detail -->
+<section style="background-image:url(@Model.BackImageBlogs.PhotoUrl);" id="single-list">
+    <div class="container">
+        <h1 style="color:@Model.BackImageBlogs.Color">Bloq</h1>
+        <ol class="breadcrumb">
+            <li><a style="color:@Model.BackImageBlogs.Color" href="/">Ana Səhifə</a></li>
+            <li><span style="color:@Model.BackImageBlogs.Color">Bloq </span></li>
+        </ol>
+    </div>
+</section>
+<!-- End Single-Blog-detail -->
+<!----------------------------------->
+<!-- Start Single-details -->
+<section id="blog-details">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="row">
+
+                    <div class="blogCard ">
+                        <div class="thumb">
+                            <a href="/Blog/Detail/@Model.BlogDetail.ID" class="image">
+                                <img src="@Model.BlogDetail.PhotoUrl" alt="Product" />
+                            </a>
+                        </div>
+                        <div class="content">
+                            <h2>@Model.BlogDetail.Header</h2>
+                            <span> <i class="fas fa-calendar-alt"></i> @Model.BlogDetail.PublishDate.ToString("dd MMM yyyy")</span>
+                            <h6>@Model.BlogDetail.BlogCategory.Name</h6>
+                            <p>
+                                <span>
+                                    @Model.BlogDetail.Title
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7 col-lg-4">
+                <div class="blog-widget">
+                    <h3 class="blog-widget-title">Önə Çıxanlar</h3>
+                    @foreach (var popBlog in Model.BlogPop)
+                    {
+                        <ul class="blog-widget-feed">
+                            <li>
+                                <a class="blog-widget-media" href="/Blog/Detail/@popBlog.ID">
+                                    <img src="@popBlog.PhotoUrl"
+                                         alt="blog-widget">
+                                </a>
+                                <div class="blog-widget-text">
+                                    <h6><a href="/Blog/Detail/@popBlog.ID">@popBlog.Header </a></h6>
+                                    <p>@popBlog.PublishDate.ToString("dd MMM yyyy")</p>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                </div>
+                <div class="blog-widget">
+                    <h3 class="blog-widget-title">Kategoriyalar</h3>
+                    <ul class="blog-widget-category">
+                        @foreach (var topCat in Model.Categories)
+                        {
+                            <li><a href="@Url.Action("List","Blog",new { id=topCat.ID})">@topCat.Name <span>@(topCat.Blogs.Count())</span></a></li>
+                        }
+
+                    </ul>
+                </div>
+                <div class="blog-widget">
+                    <h3 class="blog-widget-title">Bizi izləyin</h3>
+                    <ul class="blog-widget-social">
+                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-telegram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-whatsapp"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Single-details -->
+<!----------------------------------->
+<!-- Start DeliveryInfo -->
+<section id="deliveryinfo">
+    <div class="container ">
+        <div class="row ">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/info1.png" alt="">
+                        <h4>Online alışveriş</h4>
+                        <p>Mağazada alış-veriş etmək çox asandır.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/info2.png" alt="">
+                        <h4>Təhlükəsiz alış-veriş</h4>
+                        <p>
+                            təhlükəsiz ödəmə vasitəsi
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/info3.png" alt="">
+                        <h4>Pulsuz çatdırılma</h4>
+                        <p>59 manat üzəri çatdırılma pulsuz</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/info4.png" alt="">
+                        <h4>Təbii məhsul</h4>
+                        <p>100% təbii məhsul</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- End DeliveryInfo -->
+<!----------------------------------->

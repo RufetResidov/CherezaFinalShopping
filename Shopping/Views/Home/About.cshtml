@@ -1,0 +1,94 @@
+﻿@{
+    ViewData["Title"] = "Haqqımızda";
+}
+@model AboutVm
+<!-- Start Single-About -->
+<section style="background-image:url(@Model.BackImageAbout.PhotoUrl);" id="single-list">
+    <div class="container">
+        <h1 style="color:@Model.BackImageAbout.Color">Haqqımızda </h1>
+        <ol class="breadcrumb">
+            <li><a style="color:@Model.BackImageAbout.Color" href="/">Ana səhifə</a></li>
+            <li><span style="color:@Model.BackImageAbout.Color">Haqqımızda</span></li>
+        </ol>
+    </div>
+</section>
+<!-- End Single-About -->
+<!----------------------------------->
+<!-- Start-About-Why-me -->
+<section id="about-why-me">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-sm-12 col-md-12 col-12">
+                <div class="left">
+                    <img src="@Model.AboutSection2.Photo" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12 col-md-12 col-12">
+                <div class="about-why-me-text">
+                    <span>@Model.AboutSection2.Header1</span>
+                    <h1>@Model.AboutSection2.Header2</h1>
+                    <p>
+                        @Model.AboutSection2.Title
+                    </p>
+                    <div class="all d-flex justify-content-between">
+                        <div class="box">
+                            <div class="text">
+                                <span class="counterr" data-count="@Model.AboutSection2.CountNum1">0 </span>
+                                <h3>@Model.AboutSection2.CountTitle1</h3>
+                            </div>
+                        </div>
+                        <div class="box">
+                            <div class="text">
+                                <span class="counterr" data-count="@Model.AboutSection2.CountNum2">0</span>
+                                <h3>@Model.AboutSection2.CountTitle2</h3>
+                            </div>
+                        </div>
+                        <div class="box">
+                            <div class="text">
+                                <span class="counterr" data-count="@Model.AboutSection2.CountNum3">0</span>
+                                <h3>@Model.AboutSection2.CountTitle3</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End-About-Why-me -->
+<!----------------------------------->
+<!-- Start about-choose -->
+<section id="about-choose">
+    <div class="container">
+        <div class="row">
+            <div class="col-11 col-md-9 col-lg-7 col-xl-6 mx-auto">
+                <div class="section-heading">
+                    <h2>Müştəri məmnuniyyəti</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var about in Model.AboutSection3s)
+            {
+                <div class="col-lg-6 p-4">
+                    <div class="choose-card">
+                        <div class="choose-icon">
+                            <i class="@about.Icon"></i>
+                        </div>
+                        <div class="choose-text">
+                            <h4>@about.Header</h4>
+                            <p>
+                                @about.Title
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</section>
+<!-- End about-choose -->
+<!----------------------------------->
+
+<!----------------------------------->

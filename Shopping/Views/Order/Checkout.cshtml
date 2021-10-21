@@ -1,0 +1,199 @@
+﻿@{
+    ViewData["Title"] = "Sifariş";
+}
+@model CheckoutVm
+@{
+    decimal totalPrice = 0;
+    int totalQuantity = 0;
+}
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<style>
+    #map {
+        height: 400px;
+    }
+</style>
+<!-- Start Single-Blog-detail -->
+<section style="background-image:url(@Model.BackImageWishCheck.PhotoUrl);" id="single-list">
+    <div class="container">
+        <h1 style="color:@Model.BackImageWishCheck.Color">Sifariş</h1>
+        <ol class="breadcrumb">
+            <li><a style="color:@Model.BackImageWishCheck.Color" href="index.html">Ana Səhifə</a></li>
+            <li><span style="color:@Model.BackImageWishCheck.Color">Sifariş </span></li>
+        </ol>
+    </div>
+</section>
+<!-- End Single-Blog-detail -->
+<!----------------------------------->
+@if (Model.Products != null && Model.Products.Count > 0)
+{
+    <section id="checkout-item">
+        <div class="container">
+            <div class="row ">
+                <h2>Sifarişin qeydiyyatı</h2>
+                <div class="col-lg-7">
+                    <div class="single-content-info ">
+                        <form class="contact-form" id="OrderForm" method="post">
+                            <input type="hidden" id="addressName" name="addressName" value="" />
+                            <input type="hidden" id="locationXY" name="addressName" value="" />
+                            <h5>Əlaqə məlumatları</h5>
+                            <div class="form-group">
+                                <div class="form-input-group ">
+                                    <input class="form-control" readonly value="@Model.BadamUser.Result.FullName" type="text" placeholder="Ad">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                            <div class="form-group  ">
+                                <div class="form-input-group ">
+                                    <input class="form-control" readonly value="@Model.BadamUser.Result.Email" type="email" placeholder="Email">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="form-input-group ">
+                                    <input class="form-control" name="PhoneNumber" readonly value="@Model.BadamUser.Result.PhoneNumber" type="tel" placeholder="Telefon nömrəsi">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="form-input-group">
+                                    <textarea style="height: 157px; padding-top: 10px;" class="form-control"
+                                              name="Message" placeholder="Əlavə qeydiniz (varsa)"></textarea>
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <div class="form-input-group">
+
+                                    <input style="margin-top:8px;" class="form-control controls" type="text" name="CustomerAdress" id="user-address" placeholder="Çatdırılma ünvanı">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <div id="map"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="checkout-payment-method my-3">
+                        <h5>Ödəniş üsulu</h5>
+                        <div class="box">
+                            <input type="radio" name="radio" id="radio1" class="radio" checked />
+                            <label for="radio1">
+                                <i class="fas fa-wallet"></i>
+                                Qapıda nağd ödəniş
+                            </label>
+                        </div>
+                        @*<div class="box">
+                                <input type="radio" name="radio" id="radio2" class="radio" />
+                                <label for="radio2">
+                                    <i class="fab fa-cc-visa"></i>
+                                    Bank kartları ilə ödəniş
+                                </label>
+                            </div>*@
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="checkout-order">
+                        <h5>Sifarişin özəti</h5>
+                        <form action="#">
+                            <div class="order_table table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Məhsul</th>
+                                            <th>Qiymət</th>
+                                            <th>Ümumi Qiymət</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <input type="hidden" name="ProIDs" id="ProIDs" value="@Model.ProIDs" />
+                                        @foreach (var check in Model.Products)
+                                        {
+
+                                            int quantity = Model.ProIDs.Where(x => check.ID == x).Count();
+                                            <tr>
+                                                <td> @check.Name <strong> ×@(quantity * 100)qr </strong></td>
+                                                <td> ₼ @(check.Price - check.Discount) </td>
+                                                <td> ₼@(quantity * (decimal)(check.Price - check.Discount))  <i class="check-delete fas fa-times" cart-id="@check.ID"></i></td>
+                                            </tr>
+                                            totalPrice += quantity * (decimal)(check.Price - check.Discount);
+                                            totalQuantity += quantity;
+                                        }
+
+                                    </tbody>
+                                    <tfoot style="background-color: #ededed">
+                                        <input type="hidden" name="ProIDs" id="ProIDs" value="@Model.ProIDs" />
+                                        <tr class="order_total">
+                                            <th>Ümumi məbləğ</th>
+                                            <td></td>
+                                            <td style="border: 1px solid transparent"><strong>₼@totalPrice</strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </form>
+                        <a class="btn-hover" href="#">Sifarişi tamamla</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <!-- Cart area start -->
+    <div class="empty-cart-area pb-100px pt-100px">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="empty-text-contant text-center">
+                        <i class="fas fa-shopping-basket"></i>
+                        <h2>Səbətinizdə məhsul yoxdur</h2>
+                        <a class="empty-cart-btn" href="/Product/Shop">
+                            Alışverişə başla<i class="fas fa-angle-right"> </i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Cart area end -->
+}
+@section Scripts
+{
+    <script>
+        $(".checkout-order .btn-hover").click(function (e) {
+            console.log($("#OrderForm").serialize())
+            e.preventDefault();
+            $.ajax({
+                url: "/Order/Checkout",
+                method: "POST",
+                type: "JSON",
+                data: $("#OrderForm").serialize(),
+                success: function (res) {
+                    if (res.value.success) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Məhsul sifariş olundu',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000)
+                    } else {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            title: 'Sifariş zamanı xəta baş verdi',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    }
+
+                }
+            });
+        })
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCICSkYC6Z4YgMOZQKTnh-FxtHkif0sEfc&callback=initAutocomplete&libraries=places&v=weekly"
+            async></script>
+    <script src="~/assets/javascript/myMap.js"></script>
+}

@@ -1,0 +1,222 @@
+﻿@model Entities.Product
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row ">
+    <div class="col-md-12">
+        <form id="ProductForm" novalidate="" method="post" asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Məhsulun adı</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryID" class="control-label">Kategoriya</label>
+                <select asp-for="CategoryID" class="form-control" asp-items="ViewBag.CategoryID"></select>
+                <span asp-validation-for="CategoryID" class="text-danger"></span>
+            </div>
+            <div class="col-md-12 mb-3">
+                <div class="form-group">
+                    <div class="form-group my-3">
+                        <label class="control-label"></label>
+                        <input name="ProductPicturesIds" type="hidden" id="pictureIDs" value="" />
+                        <input id="ProductPicture" type="file" name="ProductPictures" multiple class="form-control" />
+                        <span asp-validation-for="ProductPictures" class="text-danger"></span>
+                        <div id="picturesArea" class="d-flex flex-wrap col-12">
+                            @if (Model.ProductPictures != null && Model.ProductPictures.Count > 0)
+                            {
+                                @foreach (var picture in Model.ProductPictures)
+                                {
+                                    var getThumbnail = (picture.PictureID == Model.ThumbnailPictureID ? "checked" : string.Empty);
+                                    <div class="thisImage col-lg-3">
+                                        <div class="card mt-4">
+                                            <div class="uPicHolder card-body text-center">
+                                                <img data-id="@picture.PictureID" class="image img-thumbnail" src="@picture.Picture.PictureUrl" alt="" />
+                                            </div>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">
+                                                    <!input type="radio" name="ThumbnailPictureID" class="mr-2" value="@picture.PictureID" @getThumbnail />
+                                                    <label class="imageInputLabel">Cover Image</label>
+                                                </li>
+                                            </ul>
+                                            <div class="card-footer">
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="removeImage(this)">Remove</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+
+                        <div id="imageTemplate" class="d-none">
+                            <div class="thisImage col-md-3">
+                                <div class="card mt-4">
+                                    <div class="uPicHolder card-body text-center">
+                                        <img class="image img-thumbnail" src="" alt="" />
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <input type="radio" name="ThumbnailPicture" class="mr-2" value="" />
+                                            <label class="imageInputLabel">Cover Image</label>
+                                        </li>
+                                    </ul>
+                                    <div class="card-footer">
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="removeImage(this)">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Price" class="control-label">Qiymət</label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Weight" class="control-label">Çəki</label>
+                <input asp-for="Weight" class="form-control" />
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"> Məhsul haqqında</label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Discount" class="control-label">Endirim</label>
+                <input asp-for="Discount" class="form-control" />
+                <span asp-validation-for="Discount" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" /> Paylaş
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="isFeatured" />Oxşar Məhsul
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="isSale" /> Çox satılanlar
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="isRating" />Reytinq
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="isNew" /> Yeni məhsul
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Sku" class="control-label"></label>
+                <input asp-for="Sku" class="form-control" />
+                <span asp-validation-for="Sku" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Barcode" class="control-label"></label>
+                <input asp-for="Barcode" class="form-control" />
+                <span asp-validation-for="Barcode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier" class="control-label">Marka İstehsal yeri</label>
+                <input asp-for="Supplier" class="form-control" />
+                <span asp-validation-for="Supplier" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModifiedOn" class="control-label">Marka İstehsal yeri</label>
+                <input asp-for="ModifiedOn" class="form-control" />
+                <span asp-validation-for="ModifiedOn" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="ID" />
+
+
+            <div class="form-group">
+                <input type="submit" value="Yadda saxla" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section AdminScripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script>
+        $("#ProductPicture").change(function () {
+            var pictures = this.files;
+            var picsData = new FormData();
+
+            for (var i = 0; i < pictures.length; i++) {
+                picsData.append("Picture",pictures[i])
+            }
+            $.ajax({
+                url: "/Shared/UploadPicture/",
+                type: "POST",
+                data: picsData,
+                processData: false,
+                contentType: false
+            }).done(function (res) {
+                console.log(res)
+                for (var i = 0; i < res.value.length; i++) {
+                    var picResponse = res.value[i];
+                    console.log(picResponse)
+                    AttachImage(picResponse.pictureUrl, picResponse.id);
+                }
+            })
+        })
+        function AttachImage(picUrl, Id) {
+            debugger;
+            var $newImgHtml = $("#imageTemplate").clone();
+            $newImgHtml.find(".image").attr("data-id", Id);
+            $newImgHtml.find(".image").attr("src","/img/"+ picUrl);
+            $newImgHtml.find("input[name=ThumbnailPicture]").val(Id);
+            //$newImgHtml.find("input[name=ThumbnailPicture]").attr("id", "r" + Id);
+            $("#picturesArea").append($newImgHtml.html());
+        }
+        function removeImage(pic) {
+            $(pic).parents(".thisImage").remove()
+        }
+        $("#ProductForm").submit(function (e) {
+            var imageIDs = [];
+            $("#picturesArea .image").each(function () {
+
+                var imageID = $(this).attr("data-id");
+                imageIDs.push(imageID)
+            })
+            console.log(imageIDs)
+            $("#pictureIDs").val(imageIDs.join())
+            console.log($("#ProductForm").serialize())
+            $.ajax({
+                url: "@Url.Action("Edit","Products")",
+                method: "Post",
+                type:"JSON" ,
+                data: $("#ProductForm").serialize(),
+                success:function (response) {
+                    console.log(response)
+                    if (response.value.success) {
+                        window.location = "@Url.Action("Index", "Products")";
+                    }
+                }
+
+            })
+        })
+        </script>
+}

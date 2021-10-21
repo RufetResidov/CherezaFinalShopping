@@ -1,0 +1,123 @@
+﻿@{
+    ViewData["Title"] = "Bəyənilənlər";
+}
+@model WishlistVm
+<!-- Start single-about -->
+<section style="background-image:url(@Model.BackImageWishCheck.PhotoUrl);" id="single-list">
+    <div class="container">
+        <h1 style="color:@Model.BackImageWishCheck.Color">Bəyənilənlər</h1>
+        <ol class="breadcrumb">
+            <li><a style="color:@Model.BackImageWishCheck.Color" href="/Product/Wishlist">Ana Səhifə</a></li>
+            <li><span style="color:@Model.BackImageWishCheck.Color">Bəyənilənlər</span></li>
+        </ol>
+    </div>
+</section>
+<!----------------------------------->
+<!-- Start Wishlist-part -->
+<section class="wishlist-part">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-scroll">
+                    <table class="wish-table">
+                        @if (Model != null && Model.Products != null && Model.Products.Count() > 0 && Model.ProIDs != null && Model.ProIDs.Count() > 0 != null)
+                        {
+                            <thead>
+                                <tr>
+                                    <th><label>Məhsul</label></th>
+                                    <th><label>Adı</label></th>
+                                    <th><label>Qiymət</label></th>
+                                    <th><label>Səbət</label></th>
+                                    <th><label>Bax/Sil</label></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <input type="hidden" name="ProIDs" id="ProIDs" value="@Model.ProIDs" />
+
+                                @foreach (var wish in Model.Products)
+                                {
+                                    int quantity = Model.ProIDs.Where(x => wish.ID == x).Count();
+                                    <tr class="wish-tr">
+                                        <td class="first-table" data-label="Məhsul">
+                                            <img class="img-table"
+                                                 src="@wish.ProductPictures[0].Picture.PictureUrl" alt="">
+                                        </td>
+                                        <td data-label="Adı">@wish.Name</td>
+                                        <td data-label="Qiyməti">₼@(wish.Price-wish.Discount)</td>
+                                        <td data-label="Bax/Sil">
+                                            <button proId="@wish.ID" title="Səbətə at" class="btn btn-success add-to-cart">Səbətə at </button>
+                                        </td>
+                                        <td data-label="Səbət">
+                                            <div class="icon-table">
+                                                <a href="#" class="view" data-id="@wish.ID" data-bs-toggle="modal"
+                                                   data-bs-target="#exampleModal"><i class="fas fa-arrows-alt"></i></a>
+                                                <a class="trash" cart-id="@wish.ID" title="Remove Wishlist">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        }
+                        else
+                        {
+                            <p class="alert alert-success">Bəyənilən məhsul yoxdur!</p>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- End Wishlist-part -->
+<!----------------------------------->
+<!-- Start DeliveryInfo -->
+<section id="deliveryinfo">
+    <div class="container ">
+        <div class="row ">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/info1.png" alt="">
+                        <h4>Online alışveriş</h4>
+                        <p>Mağazada alış-veriş etmək çox asandır.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/info2.png" alt="">
+                        <h4>Təhlükəsiz alış-veriş</h4>
+                        <p>
+                            təhlükəsiz ödəmə vasitəsi
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/info3.png" alt="">
+                        <h4>Pulsuz çatdırılma</h4>
+                        <p>59 manat üzəri çatdırılma pulsuz</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="box">
+                    <div class="text">
+                        <img src="~/assets/photo/info4.png" alt="">
+                        <h4>Təbii məhsul</h4>
+                        <p>100% təbii məhsul</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End DeliveryInfo -->
+<!----------------------------------->

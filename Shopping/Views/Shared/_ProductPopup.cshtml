@@ -1,0 +1,37 @@
+﻿@model Entities.Product
+<link rel="stylesheet" href="~/assets/slick/slick.css">
+<link rel="stylesheet" href="~/assets/slick/slick-theme.css">
+
+<div class="row">
+    <div class="col-lg-6 col-sm-12 col-xs-12 col-12 ">
+        <div class="swiper-top">
+            @foreach (var pic in Model.ProductPictures)
+            {
+                <div class="swiper-slide">
+                    <img src="@pic.Picture.PictureUrl" alt="">
+                </div>
+
+            }
+        </div>
+    </div>
+    <div class="col-lg-6 col-sm-12 col-xs-12 col-12">
+        <div class="product-details-content">
+            <h2>@Model.Name</h2>
+            <h5 class="view-price"><del>₼@Model.Price</del><span>₼@(Model.Price- Model.Discount)<small>/Kq</small></span></h5>
+            <p class="product-description">
+                @Model.Description
+            </p>
+            <div class="product-widget">
+                <h3 class="product-widget-title">Əlaqə </h3>
+                <ul class="product-widget-social">
+                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="#"><i class="fab fa-whatsapp"></i></a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/javascript/jquery.js"></script>
+<script src="~/assets/javascript/slick.js"></script>
+<script src="~/assets/javascript/example.js"></script>

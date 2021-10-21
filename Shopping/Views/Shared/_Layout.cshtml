@@ -1,0 +1,350 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<Entities.BadamUser> SignInManager
+@inject UserManager<Entities.BadamUser> UserManager
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cherez</title>
+    <link rel="stylesheet" href="~/assets/css/bootstrap.css">
+    <link rel="icon" href="~/assets/photo/Cherez.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/assets/slick/slick.css">
+    <link rel="stylesheet" href="~/assets/slick/slick-theme.css">
+    <link rel="stylesheet" href="~/assets/css/style.css">
+
+</head>
+
+<body>
+    <!-- StartLoadAnimation -->
+    <div class="loadImg">
+        <div class="load-middle">
+            <img src="~/assets/photo/llogo.svg" alt="">
+        </div>
+    </div>
+    <!-- EndLoadAnimation -->
+    <!----------------------------------->
+    <!-- StartScrollUp -->
+    <a id="scrollUp"></a>
+    <!-- EndScrollUp -->
+    <!----------------------------------->
+    <!-- Start Shopping-cart -->
+    <div class="shopping-cart">
+        <aside class="cart-sidebar ">
+            <div class="cart-header">
+                <div class="cart-total">
+                    <i class="fas fa-shopping-basket"></i><span>
+                        Ümumi məhsul (<span class="cart-total-quantity">0</span>)
+                    </span>
+                </div>
+                <button class="cart-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="myCart">
+
+            </div>
+        </aside>
+    </div>
+    <div class="off_canvars_overlay "></div>
+    <!--end shopping-cart -->
+    <!----------------------------------->
+    <!-- HeaderUpStart -->
+    <div id="headerUp">
+        <div class="container-fluid">
+            <div class="d-flex align-items-baseline">
+                <div class="col-lg-7">
+                    <div class="headerUp-info">
+                        <i class="fas fa-phone-alt"></i>
+                        <a style="color:#fff" href="tel:+994509795018"><span>(+994) 50-555-55-55</span></a>
+                    </div>
+                </div>
+                <div class="col-lg-5 text-end">
+                    <div class="icon">
+                        <div class="search-box d-flex">
+                            <form action="@Url.Action("Shop","Product")">
+                                <input class="search-input" type="text" name="search" placeholder="Məhsul axtar">
+                                <button class="search-btn">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </form>
+                        </div>
+
+                        <a class="heart" href="@Url.Action("Wishlist","Product")">
+                            <i class="fas fa-heart">
+                                <sup class="shop-wishlist">0</sup>
+                            </i>
+                        </a>
+                        <a class="shop-icon" href="#">
+                            <i class="fas fa-shopping-basket shop-basket">
+                                <sup class="shop-quantity">0</sup>
+                            </i>
+                        </a>
+                        <div class="dropdownUser">
+                            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <a href=""><i class="fas fa-user"></i></a>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <partial name="_LoginPartial" />
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--HeaderUpEnd -->
+    <!----------------------------------->
+    <!-- Start Header -->
+    <header id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="main">
+                        <li class="main-text">
+                            <a href="/">Ana Səhifə </a>
+                        </li>
+
+                        <li class="main-text">
+                            <a href="/Product/Shop">Məhsullar</a>
+                        </li>
+                        <li class="main-text">
+                            <a href="/blog/list">Bloq</a>
+                        </li>
+
+                        <li class="main-text"><a href="/"><img src="~/assets/photo/Cherez.svg" alt=""></a></li>
+
+
+                        <li class="main-text">
+                            <a href="/home/about">Haqqımızda </a>
+                        </li>
+                        <li class="main-text">
+                            <a href="/home/contact">Əlaqə </a>
+                        </li>
+                        <li class="main-text">
+                            <a href="/home/faq">Kömək</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- End Header -->
+    <!----------------------------------->
+    <!----------------------------------->
+    <section id="mobileUp">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="col-6">
+                    <div class="left">
+                        <div class="headerUp-info">
+                            <i class="fas fa-phone-alt"></i>
+                            <span>(+994) 50-555-55-55</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="right">
+                        <div class="search-box d-flex">
+                            <form action="@Url.Action("Shop","Product")">
+                                <input class="search-input" type="text" name="search" placeholder="Məhsul axtar">
+                                <button class="search-btn">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Mobile-header Start -->
+    <section id="mobile-header">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-around align-items-center">
+                <div class="dropdownUserMobile">
+                    <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href=""><i class="fas fa-user"></i>Hesab</a>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+
+                <div class="col-lg-2">
+                    <button class="shop-icon" title="Cartlist">
+                        <i class="fas fa-shopping-basket "><sup class="shop-quantity">0</sup></i><span>Səbət</span>
+                    </button>
+                </div>
+                <div class="col-lg-2">
+                    <a href="@Url.Action("Wishlist","Product")" title="Wishlist">
+                        <i class="fas fa-heart"><sup class="shop-wishlist">0</sup></i><span>Bəyənilənlər</span>
+                    </a>
+                </div>
+                <div class="col-lg-2 ">
+                    <button class="cate-btn" title="Category List"><i class="fas fa-list"></i><span>Menu</span></button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Mobile-header End -->
+    <!----------------------------------->
+
+    <div class="mobile-nav ">
+        <div class="exit">
+            <i class="fas fa-times"></i>
+        </div>
+        <img src="~/assets/photo/Group 2.svg " alt="">
+        <ul>
+            <li><a href="/">Ana Səhifə</a></li>
+            <li><a href="/Blog/List">Blog</a></li>
+            <li><a href="/Home/About">Haqqımızda</a></li>
+            <li><a href="/Home/Contact">Əlaqə</a></li>
+            <li><a href="/Home/Faq">Kömək</a></li>
+            <li><a href="/Product/Shop">Məhsullar</a></li>
+        </ul>
+        <div class="product-widget-social">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+            <a href="#"><i class="fas fa-phone"></i></a>
+        </div>
+
+    </div>
+
+
+    <!-- Modal Area Start -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Area End -->
+    <!--*******************************************************-->
+    <!-- data-bs-toggle="modal" data-bs-target="#exampleModal" -->
+
+
+    <main role="main">
+        @RenderBody()
+    </main>
+    <!-- Footer Start -->
+    <footer style="border-top:1px solid #007a58;" id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 pb-4">
+                    <div class="logo-title">
+                        <div class="d-flex align-items-center">
+                            <h1>Sosial</h1>
+                        </div>
+                        <p>Çərəz çeşidlərimizdə təzəlik, profesional xidmət və keyfiyyətli məhsullar ideologiyası ilə satışlarımızı etməkdəyik.</p>
+                    </div>
+                    <div class="social">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 pb-4 contact">
+                    <h1>Bizimlə əlaqə saxlayın</h1>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <p>
+                                <span>azcherez@gmail.com</span>
+                            </p>
+                        </li>
+                        <li>
+                            <i class="fas fa-mobile-alt"></i>
+                            <p>
+                                <span>+120 279 532 13</span>
+                            </p>
+                        </li>
+                        <li>
+                            <i class="fab fa-instagram"></i>
+                            <p><span>Instagram/Badam neyise</span></p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 pb-4 quick-link">
+                    <h1>Keçidlər</h1>
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="/">Ana Səhifə</a>
+                            <a href="/Identity/Account/Login">Hesabım</a>
+                            <a href="/Identity/Account/Register">Hesab yarat</a>
+                            <a href="instagram.com">Bizi izlə</a>
+                            <a href="/product/wishlist">Bəyənilənlər</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="/product/shop">Satış</a>
+                            <a href="/home/contact">Əlaqə</a>
+                            <a href="/blog/list">Xəbərlər</a>
+                            <a href="/home/contact">Haqqımızda</a>
+                            <a href="/home/faq">Kömək</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="row align-items-baseline justify-content-between">
+                    <div class="col-lg-6 col-md-8 col-12  ">
+                        <p class="footer-copytext">
+                            © All Copyrights Reserved by
+                            <a target="_blank" href="#">RufatRashidov</a>
+                        </p>
+                    </div>
+                    <div class="col-lg-6 col-md-4 col-12  ">
+                        <div class="footer-card">
+                            <a href="#"><img src="~/assets/photo/paypal.png" alt="payment"></a>
+                            <a href="#"><img src="~/assets/photo/Maestro_logo.png" alt="payment"></a>
+                            <a href="#"><img src="~/assets/photo/mastercard_PNG.png" alt="payment"></a>
+                            <a href="#"><img src="~/assets/photo/Visa_Electron.png" alt="payment"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer End -->
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/assets/javascript/cart.js"></script>
+    <script src="~/assets/javascript/bootstrap.bundle.js"></script>
+    <script src="~/assets/slick/slick.js"></script>
+    <script src="~/assets/javascript/example.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        $(".view").click(function () {
+            const proId = $(this).attr("data-id");
+            $.ajax({
+                url:"@Url.Action("PopModelMenu", "Product")",
+                data: {
+                    id: proId
+                },
+                success: function (res) {
+                    $("#exampleModal .modal-body").html(res)
+                }
+            })
+        })
+    </script>
+    <script src="//code-eu1.jivosite.com/widget/6DBFcbGsTF" async></script>
+    <!--End of Tawk.to Script-->
+</body>
+
+</html>

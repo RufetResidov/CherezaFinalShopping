@@ -1,0 +1,55 @@
+﻿@model OrderItemDetailVM
+<link href="//cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css" rel="stylesheet" />
+<!----------------------------------->
+<style>
+    #myOrderTable_length {
+        margin-bottom: 10px;
+    }
+</style>
+<section id="myAccount">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="tab-menu-detail">
+                    <div id="Order" class="tabcontent d-block">
+                        <h1>Sifarişlərim</h1>
+                        <hr>
+                        <table id="myOrderTable">
+                            <thead>
+                                <tr>
+                                    <th><label>Miqdar</label></th>
+                                    <th><label>Adress</label></th>
+                                    <th><label>Telefon</label></th>
+                                    <th><label>Endirim</label></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var order in Model.OrderItems)
+                                {
+                                <tr>
+
+                                    <td data-label="Məbləğ">@(order.Quantity*100)qr</td>
+                                    <td data-label="Məbləğ">@order.Order.CustomerAdress</td>
+                                    <td data-label="Məbləğ">@order.Order.CustomerPhone</td>
+                                    <td data-label="Məbləğ">@order.Order.Discount</td>
+                                </tr>
+                                }
+
+                                @*<td data-label="Statusu">Yolda</td>*@
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script src="//cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myOrderTable').DataTable();
+        });
+    </script>
+}
