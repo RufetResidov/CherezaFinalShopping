@@ -1,0 +1,17 @@
+D:\Shopping\Services\obj\Release\net5.0\Services.csproj.AssemblyReference.cache
+D:\Shopping\Services\obj\Release\net5.0\Services.GeneratedMSBuildEditorConfig.editorconfig
+D:\Shopping\Services\obj\Release\net5.0\Services.AssemblyInfoInputs.cache
+D:\Shopping\Services\obj\Release\net5.0\Services.AssemblyInfo.cs
+D:\Shopping\Services\obj\Release\net5.0\Services.csproj.CoreCompileInputs.cache
+D:\Shopping\Services\bin\Release\net5.0\Services.deps.json
+D:\Shopping\Services\bin\Release\net5.0\Services.dll
+D:\Shopping\Services\bin\Release\net5.0\ref\Services.dll
+D:\Shopping\Services\bin\Release\net5.0\Services.pdb
+D:\Shopping\Services\bin\Release\net5.0\DataAccess.dll
+D:\Shopping\Services\bin\Release\net5.0\Entities.dll
+D:\Shopping\Services\bin\Release\net5.0\DataAccess.pdb
+D:\Shopping\Services\bin\Release\net5.0\Entities.pdb
+D:\Shopping\Services\obj\Release\net5.0\Services.csproj.CopyComplete
+D:\Shopping\Services\obj\Release\net5.0\Services.dll
+D:\Shopping\Services\obj\Release\net5.0\ref\Services.dll
+D:\Shopping\Services\obj\Release\net5.0\Services.pdb

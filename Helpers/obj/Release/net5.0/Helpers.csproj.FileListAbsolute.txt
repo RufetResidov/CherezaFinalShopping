@@ -1,0 +1,15 @@
+D:\Shopping\Helpers\obj\Release\net5.0\Helpers.csproj.AssemblyReference.cache
+D:\Shopping\Helpers\obj\Release\net5.0\Helpers.GeneratedMSBuildEditorConfig.editorconfig
+D:\Shopping\Helpers\obj\Release\net5.0\Helpers.AssemblyInfoInputs.cache
+D:\Shopping\Helpers\obj\Release\net5.0\Helpers.AssemblyInfo.cs
+D:\Shopping\Helpers\obj\Release\net5.0\Helpers.csproj.CoreCompileInputs.cache
+D:\Shopping\Helpers\bin\Release\net5.0\Helpers.deps.json
+D:\Shopping\Helpers\bin\Release\net5.0\Helpers.dll
+D:\Shopping\Helpers\bin\Release\net5.0\ref\Helpers.dll
+D:\Shopping\Helpers\bin\Release\net5.0\Helpers.pdb
+D:\Shopping\Helpers\bin\Release\net5.0\Entities.dll
+D:\Shopping\Helpers\bin\Release\net5.0\Entities.pdb
+D:\Shopping\Helpers\obj\Release\net5.0\Helpers.csproj.CopyComplete
+D:\Shopping\Helpers\obj\Release\net5.0\Helpers.dll
+D:\Shopping\Helpers\obj\Release\net5.0\ref\Helpers.dll
+D:\Shopping\Helpers\obj\Release\net5.0\Helpers.pdb

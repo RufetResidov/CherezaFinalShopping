@@ -1,5 +1,6 @@
 'use strict'
 //Animation OnlOad
+AOS.init();
 $(function () {
     $('.swiper-top').slick({
         dots: false,
@@ -7,7 +8,7 @@ $(function () {
         speed: 300,
         slidesToShow: 1,
         slidesToScroll: 1,
-        infinite:true,
+        infinite: true,
 
     });
     $('.swiper-bottom').slick({
@@ -50,10 +51,8 @@ $(function () {
 
 
 $(window).on('load', function () {
-    setTimeout(function () {
         $(".loadImg").hide()
         $("body").css("overflow-y", "scroll")
-    }, 300);
 });
 //Animation OnlOad
 
@@ -150,18 +149,18 @@ $(document).ready(function () {
                 $({
                     countNum: cnt.text()
                 }).animate({
-                        countNum: countTo
-                    }, {
+                    countNum: countTo
+                }, {
 
-                        duration: 2000,
-                        easing: 'linear',
-                        step: function () {
-                            cnt.text(Math.floor(this.countNum))
-                        },
-                        complete: function () {
-                            cnt.text(this.countNum);
-                        }
+                    duration: 2000,
+                    easing: 'linear',
+                    step: function () {
+                        cnt.text(Math.floor(this.countNum))
+                    },
+                    complete: function () {
+                        cnt.text(this.countNum);
                     }
+                }
 
                 )
             })
@@ -176,18 +175,18 @@ $(document).ready(function () {
                 $({
                     countNum: cnt.text()
                 }).animate({
-                        countNum: countTo
-                    }, {
+                    countNum: countTo
+                }, {
 
-                        duration: 3000,
-                        easing: 'linear',
-                        step: function () {
-                            cnt.text(Math.floor(this.countNum))
-                        },
-                        complete: function () {
-                            cnt.text(this.countNum);
-                        }
+                    duration: 3000,
+                    easing: 'linear',
+                    step: function () {
+                        cnt.text(Math.floor(this.countNum))
+                    },
+                    complete: function () {
+                        cnt.text(this.countNum);
                     }
+                }
 
                 )
             })

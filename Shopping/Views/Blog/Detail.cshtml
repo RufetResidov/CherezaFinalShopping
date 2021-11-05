@@ -33,9 +33,7 @@
                             <span> <i class="fas fa-calendar-alt"></i> @Model.BlogDetail.PublishDate.ToString("dd MMM yyyy")</span>
                             <h6>@Model.BlogDetail.BlogCategory.Name</h6>
                             <p>
-                                <span>
-                                    @Model.BlogDetail.Title
-                                </span>
+                                    @Html.Raw(Model.BlogDetail.Title)
                             </p>
                         </div>
                     </div>

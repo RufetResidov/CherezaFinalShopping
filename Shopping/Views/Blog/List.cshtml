@@ -43,18 +43,14 @@
                                 </div>
                                 <div class="content">
                                     <h4>@blogList.Header</h4>
-                                    <p>
-                                        @if (blogList.Title.Length > 60 && blogList.Title.Length > 0)
+                                        @if (blogList.Title != null && blogList.Title.Length > 60 && blogList.Title.Length > 0)
                                         {
-
-                                            <span>@blogList.Title.Substring(0, 60) ...</span>
+                                            <span>@Html.Raw(blogList.Title.Substring(0, 60))...</span>
                                         }
                                         else
                                         {
-                                            <span>@blogList.Title</span>
-
+                                            <span>@Html.Raw(blogList.Title)</span>
                                         }
-                                    </p>
                                     <a href="/Blog/Detail/@blogList.ID">Daha ətraflı <i class="fas fa-chevron-right"></i></a>
                                 </div>
                             </div>

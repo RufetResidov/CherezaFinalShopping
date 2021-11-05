@@ -63,7 +63,7 @@ namespace Shopping.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Header,Title,PublishDate,PhotoUrl,BlogCategoryID,ID,ModifiedOn")] Blog blog,IFormFile PhotoUrl)
+        public async Task<IActionResult> Create([Bind("Header,Title,PublishDate,PhotoUrl,BlogCategoryID,ID,ModifiedOn")] Blog blog,IFormFile PhotoUrl,string Title)
         {
             if (ModelState.IsValid)
             {
@@ -76,6 +76,7 @@ namespace Shopping.Areas.Admin.Controllers
                     PhotoUrl.CopyTo(fileStream);
                     blog.PhotoUrl = "/img/" + fileName;
                 }
+                blog.Title = Title;
                 _context.Add(blog);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -106,7 +107,7 @@ namespace Shopping.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Header,Title,PublishDate,PhotoUrl,BlogCategoryID,ID,ModifiedOn")] Blog blog,IFormFile PhotoUrl)
+        public async Task<IActionResult> Edit(int id, [Bind("Header,Title,PublishDate,PhotoUrl,BlogCategoryID,ID,ModifiedOn")] Blog blog,IFormFile PhotoUrl,string Title)
         {
             if (id != blog.ID)
             {
@@ -126,6 +127,7 @@ namespace Shopping.Areas.Admin.Controllers
                 }
                 try
                 {
+                    blog.Title = Title;
                     _context.Update(blog);
                     await _context.SaveChangesAsync();
                 }
